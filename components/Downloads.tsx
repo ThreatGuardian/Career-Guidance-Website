@@ -19,7 +19,7 @@ const Downloads: React.FC<DownloadsProps> = ({ resources }) => {
   };
 
   return (
-    <section id="downloads" className="py-20 bg-white">
+    <section id="downloads" className="py-20 bg-white/50 backdrop-blur-sm">
       <div className="container mx-auto px-4 md:px-6">
         <SectionHeading 
           title="References & Downloads" 
@@ -30,7 +30,7 @@ const Downloads: React.FC<DownloadsProps> = ({ resources }) => {
           {resources.map((res) => (
             <div 
               key={res.id} 
-              className="border border-gray-100 rounded-xl p-5 hover:border-brand-accent/30 hover:shadow-lg transition-all flex items-start gap-4 group bg-gray-50 hover:bg-white"
+              className="border border-white/50 rounded-xl p-5 hover:border-brand-accent/30 hover:shadow-lg transition-all flex items-start gap-4 group bg-white/70 hover:bg-white backdrop-blur"
             >
               <div className="bg-white p-3 rounded-lg shadow-sm group-hover:scale-110 transition-transform">
                 {getFileIcon(res.fileType)}
@@ -39,7 +39,7 @@ const Downloads: React.FC<DownloadsProps> = ({ resources }) => {
                 <h4 className="font-bold text-brand-navy truncate pr-2">{res.title}</h4>
                 <p className="text-sm text-gray-500 line-clamp-2 mb-2">{res.description}</p>
                 <div className="flex items-center gap-3">
-                   <span className="text-xs font-mono bg-gray-200 px-2 py-0.5 rounded text-gray-600 uppercase">{res.fileType}</span>
+                   <span className="text-xs font-mono bg-gray-200/80 px-2 py-0.5 rounded text-gray-600 uppercase">{res.fileType}</span>
                    {res.fileSize && <span className="text-xs text-gray-400">{res.fileSize}</span>}
                 </div>
               </div>

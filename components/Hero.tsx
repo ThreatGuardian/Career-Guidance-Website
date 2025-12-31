@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, CheckCircle } from 'lucide-react';
+import CounterAnimation from './CounterAnimation';
 
 const Hero: React.FC = () => {
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
@@ -62,7 +63,10 @@ const Hero: React.FC = () => {
 
             <div className="mt-10 pt-8 border-t border-gray-200 flex flex-wrap justify-center md:justify-start gap-6 text-sm font-medium text-gray-500 animate-fade-in opacity-0" style={{ animationDelay: '1s' }}>
               <div className="flex items-center gap-2 hover:text-brand-accent transition-colors cursor-default">
-                <CheckCircle size={16} className="text-green-600" /> 5000+ Students Guided
+                <CheckCircle size={16} className="text-green-600" /> 
+                <span className="flex gap-1">
+                  <CounterAnimation end={5000} suffix="+" duration={2500} /> Students Guided
+                </span>
               </div>
               <div className="flex items-center gap-2 hover:text-brand-accent transition-colors cursor-default">
                 <CheckCircle size={16} className="text-green-600" /> Scientific Approach

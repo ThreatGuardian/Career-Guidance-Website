@@ -12,8 +12,9 @@ import AdminDashboard from './components/AdminDashboard';
 import LoginScreen from './components/LoginScreen';
 import NotificationSystem from './components/NotificationSystem';
 import ArticleView from './components/ArticleView';
-import { BlogPost, NotificationItem, ResourceItem } from './types';
-import { BlogService, NotificationService, ResourceService } from './services/api';
+import BackgroundElements from './components/BackgroundElements';
+import { BlogPost, NotificationItem, ResourceItem, InquiryItem } from './types';
+import { BlogService, NotificationService, ResourceService, InquiryService } from './services/api';
 import { AuthService } from './services/auth';
 import { User } from 'firebase/auth';
 
@@ -25,6 +26,7 @@ const App: React.FC = () => {
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const [notifications, setNotifications] = useState<NotificationItem[]>([]);
   const [resources, setResources] = useState<ResourceItem[]>([]);
+  const [inquiries, setInquiries] = useState<InquiryItem[]>([]);
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -44,15 +46,17 @@ const App: React.FC = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const [fetchedBlogs, fetchedNotes, fetchedRes] = await Promise.all([
+        const [fetchedBlogs, fetchedNotes, fetchedRes, fetchedInq] = await Promise.all([
           BlogService.getAll(),
           NotificationService.getAll(),
-          ResourceService.getAll()
+          ResourceService.getAll(),
+          InquiryService.getAll()
         ]);
 
         setBlogs(fetchedBlogs);
         setNotifications(fetchedNotes);
         setResources(fetchedRes);
+        setInquiries(fetchedInq);
       } catch (error) {
         console.error("Failed to load data from Firebase", error);
       } finally {
@@ -61,6 +65,28 @@ const App: React.FC = () => {
     };
     loadData();
   }, []);
+
+  // 3. Dynamic Title (SEO)
+  useEffect(() => {
+    const baseTitle = "Bhagwan Pandekar - Career Counsellor";
+    switch(view) {
+      case 'home':
+        document.title = `${baseTitle} | Expert Guidance`;
+        break;
+      case 'booking':
+        document.title = `Book Consultation | ${baseTitle}`;
+        break;
+      case 'login':
+        document.title = `Admin Login | ${baseTitle}`;
+        break;
+      case 'admin':
+        document.title = `Dashboard | ${baseTitle}`;
+        break;
+      // Article title is handled in ArticleView component
+      default:
+        document.title = baseTitle;
+    }
+  }, [view]);
 
   const handleBookNow = () => {
     setView('booking');
@@ -124,22 +150,26 @@ const App: React.FC = () => {
         posts={blogs}
         notifications={notifications}
         resources={resources}
+        inquiries={inquiries}
         setPosts={setBlogs}
         setNotifications={setNotifications}
         setResources={setResources}
+        setInquiries={setInquiries}
         currentUserEmail={user.email}
       />
     );
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen relative">
+      <BackgroundElements />
       <NotificationSystem notifications={notifications} />
       
       {/* Navbar gets special props to handle navigation when not on home page */}
       <Navbar onHomeClick={handleGoHome} isBookingMode={view !== 'home'} />
       
-      <main className="flex-grow">
+      {/* Main content wrapped in relative and z-10 to sit above background */}
+      <main className="flex-grow relative z-10">
         {view === 'home' ? (
           <>
             <Hero />
@@ -156,7 +186,9 @@ const App: React.FC = () => {
         ) : null}
       </main>
       
-      <Contact onAdminClick={handleAdminClick} isLoggedIn={!!user} />
+      <div className="relative z-10">
+        <Contact onAdminClick={handleAdminClick} isLoggedIn={!!user} />
+      </div>
     </div>
   );
 };

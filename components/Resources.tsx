@@ -23,7 +23,7 @@ const Resources: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'exams' | 'scholarships'>('exams');
 
   return (
-    <section id="resources" className="py-20 bg-brand-light">
+    <section id="resources" className="py-20 bg-brand-light/60 backdrop-blur-sm">
       <div className="container mx-auto px-4 md:px-6">
         <SectionHeading 
           title="Student Resource Hub" 
@@ -33,7 +33,7 @@ const Resources: React.FC = () => {
         <div className="max-w-4xl mx-auto">
           {/* Tabs */}
           <div className="flex justify-center mb-8">
-            <div className="bg-white p-1.5 rounded-full shadow-sm border border-gray-200 inline-flex">
+            <div className="bg-white/80 backdrop-blur p-1.5 rounded-full shadow-sm border border-gray-200 inline-flex">
               <button
                 onClick={() => setActiveTab('exams')}
                 className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
@@ -58,7 +58,7 @@ const Resources: React.FC = () => {
           </div>
 
           {/* Content Card */}
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden min-h-[400px]">
+          <div className="bg-white/90 backdrop-blur rounded-2xl shadow-lg border border-white/50 overflow-hidden min-h-[400px]">
             
             {activeTab === 'exams' && (
               <div className="p-6 md:p-8 animate-in fade-in duration-300">
@@ -101,7 +101,7 @@ const Resources: React.FC = () => {
                 </div>
                 <div className="grid gap-4">
                   {scholarships.map((sch, i) => (
-                    <div key={i} className="flex flex-col md:flex-row md:items-center justify-between p-5 border border-gray-100 rounded-xl hover:border-brand-accent/30 hover:shadow-md transition-all">
+                    <div key={i} className="flex flex-col md:flex-row md:items-center justify-between p-5 border border-gray-100 rounded-xl hover:border-brand-accent/30 hover:shadow-md transition-all bg-white/50">
                       <div>
                         <h4 className="font-bold text-lg text-brand-navy mb-1">{sch.name}</h4>
                         <p className="text-sm text-gray-600">Eligibility: {sch.eligibility}</p>
@@ -124,7 +124,7 @@ const Resources: React.FC = () => {
           </div>
           
           <div className="mt-8 text-center">
-            <p className="text-sm text-gray-500 italic">
+            <p className="text-sm text-gray-500 italic bg-white/50 inline-block px-4 py-1 rounded-full backdrop-blur-sm">
               * Dates and eligibility criteria are subject to change by respective conducting bodies. Please consult officially.
             </p>
           </div>

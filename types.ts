@@ -52,3 +52,28 @@ export interface ResourceItem {
   downloadUrl: string;
   fileSize?: string;
 }
+
+export interface InquiryItem {
+  id: string;
+  name: string;
+  phone: string;
+  message: string;
+  date: string;
+  isRead: boolean;
+}
+
+export interface ChatMessage {
+  id: string;
+  role: 'user' | 'model';
+  text: string;
+  isError?: boolean;
+  timestamp: Date;
+  audioData?: string; // Base64 audio string for TTS
+}
+
+export interface RoadmapRequest {
+  grade: string;
+  stream: string;
+  interests: string;
+  strongSubjects: string;
+}

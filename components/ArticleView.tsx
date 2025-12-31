@@ -11,7 +11,11 @@ const ArticleView: React.FC<ArticleViewProps> = ({ post, onBack }) => {
   
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    // Dynamic Title
+    document.title = `${post.title} | Career Insights`;
+    
+    // Cleanup to revert title happens in parent App.tsx when view changes
+  }, [post]);
 
   return (
     <div className="min-h-screen bg-white animate-in fade-in slide-in-from-bottom-4 duration-500">

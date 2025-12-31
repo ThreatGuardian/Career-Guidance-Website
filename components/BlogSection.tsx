@@ -13,7 +13,7 @@ const BlogSection: React.FC<BlogSectionProps> = ({ posts, onViewPost }) => {
   if (posts.length === 0) return null;
 
   return (
-    <section id="blog" className="py-20 bg-gray-50">
+    <section id="blog" className="py-20 bg-transparent">
       <div className="container mx-auto px-4 md:px-6">
         <SectionHeading 
           title="Career Insights & Articles" 
@@ -24,7 +24,7 @@ const BlogSection: React.FC<BlogSectionProps> = ({ posts, onViewPost }) => {
           {posts.map((post) => (
             <div 
               key={post.id} 
-              className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-full group"
+              className="bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-full group border border-white/50"
             >
               {post.imageUrl && (
                 <div className="h-48 overflow-hidden relative cursor-pointer" onClick={() => onViewPost(post)}>
@@ -33,7 +33,7 @@ const BlogSection: React.FC<BlogSectionProps> = ({ posts, onViewPost }) => {
                     alt={post.title} 
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-brand-navy">
+                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-brand-navy shadow-sm">
                     {post.category}
                   </div>
                 </div>

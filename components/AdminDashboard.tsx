@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { BlogPost, NotificationItem, ResourceItem } from '../types';
-import { Plus, Trash2, Save, LayoutDashboard, Bell, FileText, Download, ArrowLeft, UploadCloud, Pencil, XCircle, Loader2, LogOut, User } from 'lucide-react';
-import { BlogService, NotificationService, ResourceService } from '../services/api';
+import { BlogPost, NotificationItem, ResourceItem, InquiryItem } from '../types';
+import { Plus, Trash2, Save, LayoutDashboard, Bell, FileText, Download, ArrowLeft, UploadCloud, Pencil, XCircle, Loader2, LogOut, User, Image as ImageIcon, MessageSquare, Phone, Calendar } from 'lucide-react';
+import { BlogService, NotificationService, ResourceService, InquiryService } from '../services/api';
+import { StorageService } from '../services/storage';
 
 interface AdminDashboardProps {
   onBack: () => void;
@@ -9,16 +10,18 @@ interface AdminDashboardProps {
   posts: BlogPost[];
   notifications: NotificationItem[];
   resources: ResourceItem[];
+  inquiries: InquiryItem[];
   setPosts: (posts: BlogPost[]) => void;
   setNotifications: (notes: NotificationItem[]) => void;
   setResources: (res: ResourceItem[]) => void;
+  setInquiries: (inq: InquiryItem[]) => void;
   currentUserEmail?: string | null;
 }
 
 const AdminDashboard: React.FC<AdminDashboardProps> = ({ 
-  onBack, onLogout, posts, notifications, resources, setPosts, setNotifications, setResources, currentUserEmail 
+  onBack, onLogout, posts, notifications, resources, inquiries, setPosts, setNotifications, setResources, setInquiries, currentUserEmail 
 }) => {
-  const [activeTab, setActiveTab] = useState<'blogs' | 'notifications' | 'downloads'>('blogs');
+  const [activeTab, setActiveTab] = useState<'blogs' | 'notifications' | 'downloads' | 'inquiries'>('blogs');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDeleting, setIsDeleting] = useState<string | null>(null);
 
@@ -26,6 +29,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const initialBlogForm: Partial<BlogPost> = { title: '', content: '', excerpt: '', category: 'General', author: 'Bhagwan Pandekar', imageUrl: '' };
   const [blogForm, setBlogForm] = useState<Partial<BlogPost>>(initialBlogForm);
   const [editingPostId, setEditingPostId] = useState<string | null>(null);
+  const [selectedBlogImage, setSelectedBlogImage] = useState<File | null>(null);
   
   // --- Notification State ---
   const initialNoteForm: Partial<NotificationItem> = { title: '', message: '', type: 'info', active: true, link: '' };
@@ -36,32 +40,52 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const initialResForm: Partial<ResourceItem> = { title: '', description: '', fileType: 'pdf' };
   const [resForm, setResForm] = useState<Partial<ResourceItem>>(initialResForm);
   const [editingResId, setEditingResId] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedFileName, setSelectedFileName] = useState<string>('');
 
 
   // --- HELPERS ---
   const refreshAllData = async () => {
     // Re-fetch data to ensure UI matches Database exactly
-    const [fetchedBlogs, fetchedNotes, fetchedRes] = await Promise.all([
+    const [fetchedBlogs, fetchedNotes, fetchedRes, fetchedInquiries] = await Promise.all([
       BlogService.getAll(),
       NotificationService.getAll(),
-      ResourceService.getAll()
+      ResourceService.getAll(),
+      InquiryService.getAll()
     ]);
     setPosts(fetchedBlogs);
     setNotifications(fetchedNotes);
     setResources(fetchedRes);
+    setInquiries(fetchedInquiries);
   };
 
 
   // --- BLOG HANDLERS ---
+  const handleBlogImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedBlogImage(file);
+    }
+  };
+
   const handleBlogSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!blogForm.title || !blogForm.content) return;
     
     setIsSubmitting(true);
     try {
+      let finalImageUrl = blogForm.imageUrl || 'https://picsum.photos/800/600';
+
+      // 1. Upload Image if selected
+      if (selectedBlogImage) {
+        finalImageUrl = await StorageService.uploadFile(selectedBlogImage, 'blogs');
+      }
+
       if (editingPostId) {
-        await BlogService.update(editingPostId, blogForm);
+        await BlogService.update(editingPostId, {
+          ...blogForm,
+          imageUrl: finalImageUrl
+        });
       } else {
         const newPostData = {
           date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
@@ -70,11 +94,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
           excerpt: blogForm.excerpt || blogForm.content!.substring(0, 100) + '...',
           category: blogForm.category || 'General',
           author: blogForm.author || 'Admin',
-          imageUrl: blogForm.imageUrl || 'https://picsum.photos/800/600'
+          imageUrl: finalImageUrl
         };
         await BlogService.create(newPostData as any);
       }
       setBlogForm(initialBlogForm);
+      setSelectedBlogImage(null);
       setEditingPostId(null);
       await refreshAllData(); // Sync with DB
     } catch (err) {
@@ -92,6 +117,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
         return;
     }
     setBlogForm(post);
+    setSelectedBlogImage(null);
     setEditingPostId(post.id);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -114,6 +140,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
         if(editingPostId === id) {
           setEditingPostId(null);
           setBlogForm(initialBlogForm);
+          setSelectedBlogImage(null);
         }
       } catch (err: any) {
         console.error("Delete Error:", err);
@@ -201,8 +228,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      setSelectedFile(file);
       setSelectedFileName(file.name);
       
+      // Auto-detect type
       let type: 'pdf' | 'ppt' | 'doc' = 'pdf';
       if (file.name.endsWith('.ppt') || file.name.endsWith('.pptx')) type = 'ppt';
       else if (file.name.endsWith('.doc') || file.name.endsWith('.docx')) type = 'doc';
@@ -221,26 +250,47 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
     e.preventDefault();
     if (!resForm.title) return;
 
+    // Must have a file if creating new, or a URL if editing
+    if (!editingResId && !selectedFile) {
+        alert("Please upload a file.");
+        return;
+    }
+
     setIsSubmitting(true);
     try {
+      let downloadUrl = resForm.downloadUrl || '#';
+      let fileSize = resForm.fileSize || 'Unknown';
+
+      // 1. Upload File if selected
+      if (selectedFile) {
+        downloadUrl = await StorageService.uploadFile(selectedFile, 'resources');
+        fileSize = (selectedFile.size / (1024 * 1024)).toFixed(2) + ' MB';
+      }
+
       if (editingResId) {
-        await ResourceService.update(editingResId, resForm);
+        await ResourceService.update(editingResId, {
+            ...resForm,
+            downloadUrl,
+            fileSize
+        });
       } else {
         const newResData = {
           title: resForm.title!,
           description: resForm.description || '',
           fileType: resForm.fileType as any || 'pdf',
-          downloadUrl: '#',
-          fileSize: (Math.random() * 5 + 1).toFixed(1) + ' MB'
+          downloadUrl: downloadUrl,
+          fileSize: fileSize
         };
         await ResourceService.create(newResData as any);
       }
       setResForm(initialResForm);
+      setSelectedFile(null);
       setSelectedFileName('');
       setEditingResId(null);
       await refreshAllData();
     } catch (err) {
-      alert("Error saving resource.");
+      console.error(err);
+      alert("Error saving resource/uploading file.");
     } finally {
       setIsSubmitting(false);
     }
@@ -254,6 +304,8 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
     }
     setResForm(res);
     setEditingResId(res.id);
+    setSelectedFile(null);
+    setSelectedFileName(''); // Don't show filename unless new one picked
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -272,10 +324,31 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
         if(editingResId === id) {
           setEditingResId(null);
           setResForm(initialResForm);
+          setSelectedFile(null);
           setSelectedFileName('');
         }
       } catch (err) {
         alert("Error deleting resource.");
+      } finally {
+        setIsDeleting(null);
+      }
+    }
+  };
+
+  // --- INQUIRY HANDLERS ---
+  const deleteInquiry = async (e: React.MouseEvent, id: string) => {
+    e.stopPropagation();
+    if (id.startsWith('mock-')) {
+        alert("Cannot delete mock inquiries.");
+        return;
+    }
+    if(window.confirm('Delete this message?')) {
+      setIsDeleting(id);
+      try {
+        await InquiryService.delete(id);
+        await refreshAllData();
+      } catch(err) {
+        alert("Error deleting inquiry.");
       } finally {
         setIsDeleting(null);
       }
@@ -332,6 +405,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
           >
             <Download size={20} /> Reference Files
           </button>
+          <button 
+            onClick={() => { setActiveTab('inquiries'); }}
+            className={`px-6 py-3 rounded-lg font-medium flex items-center gap-2 transition-all ${activeTab === 'inquiries' ? 'bg-white text-brand-navy shadow-md border-l-4 border-brand-navy' : 'bg-gray-200 text-gray-600 hover:bg-gray-300'}`}
+          >
+            <MessageSquare size={20} /> Messages ({inquiries.length})
+          </button>
         </div>
 
         {/* --- BLOGS SECTION --- */}
@@ -345,7 +424,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   {editingPostId ? 'Edit Article' : 'Add New Article'}
                 </span>
                 {editingPostId && (
-                  <button onClick={() => { setEditingPostId(null); setBlogForm(initialBlogForm); }} className="text-xs text-red-500 flex items-center gap-1 hover:underline">
+                  <button onClick={() => { setEditingPostId(null); setBlogForm(initialBlogForm); setSelectedBlogImage(null); }} className="text-xs text-red-500 flex items-center gap-1 hover:underline">
                     <XCircle size={14} /> Cancel
                   </button>
                 )}
@@ -353,12 +432,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <form onSubmit={handleBlogSubmit} className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Article Title</label>
-                  <input required type="text" className="w-full p-2 border rounded focus:ring-2 focus:ring-brand-accent outline-none" 
-                    value={blogForm.title} onChange={e => setBlogForm({...blogForm, title: e.target.value})} />
+                  <input required type="text" className="w-full p-2 border border-gray-300 rounded bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-brand-accent outline-none" 
+                    value={blogForm.title} onChange={e => setBlogForm({...blogForm, title: e.target.value})} placeholder="Enter article title" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                  <select className="w-full p-2 border rounded focus:ring-2 focus:ring-brand-accent outline-none"
+                  <select className="w-full p-2 border border-gray-300 rounded bg-white text-gray-900 focus:ring-2 focus:ring-brand-accent outline-none"
                     value={blogForm.category} onChange={e => setBlogForm({...blogForm, category: e.target.value})}>
                     <option>General</option>
                     <option>Engineering</option>
@@ -366,14 +445,32 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     <option>Study Tips</option>
                   </select>
                 </div>
+                
+                {/* Image Upload */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
-                  <input type="text" className="w-full p-2 border rounded focus:ring-2 focus:ring-brand-accent outline-none" placeholder="https://..."
-                    value={blogForm.imageUrl} onChange={e => setBlogForm({...blogForm, imageUrl: e.target.value})} />
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Cover Image</label>
+                  <div className="flex flex-col gap-2">
+                     <div className="relative border border-gray-300 rounded-lg p-3 bg-white flex items-center gap-3 cursor-pointer hover:bg-blue-50 transition-colors">
+                        <ImageIcon size={20} className="text-gray-400" />
+                        <span className="text-sm text-gray-600 truncate flex-1">
+                           {selectedBlogImage ? selectedBlogImage.name : "Choose File..."}
+                        </span>
+                        <input 
+                           type="file" 
+                           accept="image/*"
+                           onChange={handleBlogImageSelect}
+                           className="absolute inset-0 opacity-0 cursor-pointer"
+                        />
+                     </div>
+                     <p className="text-xs text-gray-400 text-center">- OR -</p>
+                     <input type="text" className="w-full p-2 border border-gray-300 rounded bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-brand-accent outline-none text-sm" placeholder="Paste Image URL directly..."
+                      value={blogForm.imageUrl} onChange={e => setBlogForm({...blogForm, imageUrl: e.target.value})} />
+                  </div>
                 </div>
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Content</label>
-                  <textarea required rows={6} className="w-full p-2 border rounded focus:ring-2 focus:ring-brand-accent outline-none"
+                  <textarea required rows={6} className="w-full p-2 border border-gray-300 rounded bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-brand-accent outline-none"
                     value={blogForm.content} onChange={e => setBlogForm({...blogForm, content: e.target.value})} placeholder="Write your article here..." />
                 </div>
                 <button type="submit" disabled={isSubmitting} className={`w-full text-white py-2 rounded transition-colors flex justify-center items-center gap-2 ${editingPostId ? 'bg-orange-500 hover:bg-orange-600' : 'bg-brand-navy hover:bg-brand-accent'} ${isSubmitting ? 'opacity-70 cursor-wait' : ''}`}>
@@ -437,12 +534,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <form onSubmit={handleNoteSubmit} className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
-                  <input required type="text" className="w-full p-2 border rounded focus:ring-2 focus:ring-brand-accent outline-none" 
+                  <input required type="text" className="w-full p-2 border border-gray-300 rounded bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-brand-accent outline-none" 
                     value={noteForm.title} onChange={e => setNoteForm({...noteForm, title: e.target.value})} placeholder="e.g. JEE Registration Open" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Priority Type</label>
-                  <select className="w-full p-2 border rounded focus:ring-2 focus:ring-brand-accent outline-none"
+                  <select className="w-full p-2 border border-gray-300 rounded bg-white text-gray-900 focus:ring-2 focus:ring-brand-accent outline-none"
                     value={noteForm.type} onChange={e => setNoteForm({...noteForm, type: e.target.value as any})}>
                     <option value="info">General News (Blue)</option>
                     <option value="urgent">Urgent / Important (Red)</option>
@@ -451,12 +548,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
-                  <textarea required rows={3} className="w-full p-2 border rounded focus:ring-2 focus:ring-brand-accent outline-none"
+                  <textarea required rows={3} className="w-full p-2 border border-gray-300 rounded bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-brand-accent outline-none"
                     value={noteForm.message} onChange={e => setNoteForm({...noteForm, message: e.target.value})} placeholder="Details about the exam dates..." />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">External Link (Optional)</label>
-                  <input type="text" className="w-full p-2 border rounded focus:ring-2 focus:ring-brand-accent outline-none" placeholder="https://jeemain.nta.nic.in"
+                  <input type="text" className="w-full p-2 border border-gray-300 rounded bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-brand-accent outline-none" placeholder="https://jeemain.nta.nic.in"
                     value={noteForm.link} onChange={e => setNoteForm({...noteForm, link: e.target.value})} />
                 </div>
                 <button type="submit" disabled={isSubmitting} className={`w-full text-white py-2 rounded transition-colors flex justify-center items-center gap-2 ${editingNoteId ? 'bg-orange-500 hover:bg-orange-600' : 'bg-brand-navy hover:bg-brand-accent'} ${isSubmitting ? 'opacity-70 cursor-wait' : ''}`}>
@@ -512,7 +609,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   {editingResId ? 'Edit File Details' : 'Add Reference File'}
                 </span>
                 {editingResId && (
-                  <button onClick={() => { setEditingResId(null); setResForm(initialResForm); setSelectedFileName(''); }} className="text-xs text-red-500 flex items-center gap-1 hover:underline">
+                  <button onClick={() => { setEditingResId(null); setResForm(initialResForm); setSelectedFileName(''); setSelectedFile(null); }} className="text-xs text-red-500 flex items-center gap-1 hover:underline">
                     <XCircle size={14} /> Cancel
                   </button>
                 )}
@@ -522,7 +619,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 {/* Efficient File Picker */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Upload File {editingResId && '(Optional)'}</label>
-                  <div className="relative border-2 border-dashed border-gray-300 rounded-lg p-6 bg-gray-50 hover:bg-blue-50 transition-colors text-center cursor-pointer group">
+                  <div className="relative border-2 border-dashed border-gray-300 rounded-lg p-6 bg-white hover:bg-blue-50 transition-colors text-center cursor-pointer group">
                     <input 
                       type="file" 
                       accept=".pdf,.ppt,.pptx,.doc,.docx"
@@ -539,17 +636,17 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">File Title</label>
-                  <input required type="text" className="w-full p-2 border rounded focus:ring-2 focus:ring-brand-accent outline-none" 
+                  <input required type="text" className="w-full p-2 border border-gray-300 rounded bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-brand-accent outline-none" 
                     value={resForm.title} onChange={e => setResForm({...resForm, title: e.target.value})} placeholder="Auto-fills from filename" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Description (Optional)</label>
-                  <textarea rows={2} className="w-full p-2 border rounded focus:ring-2 focus:ring-brand-accent outline-none"
+                  <textarea rows={2} className="w-full p-2 border border-gray-300 rounded bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-brand-accent outline-none"
                     value={resForm.description} onChange={e => setResForm({...resForm, description: e.target.value})} placeholder="Brief info..." />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">File Type</label>
-                  <select className="w-full p-2 border rounded focus:ring-2 focus:ring-brand-accent outline-none bg-gray-50"
+                  <select className="w-full p-2 border border-gray-300 rounded bg-white text-gray-900 focus:ring-2 focus:ring-brand-accent outline-none"
                     value={resForm.fileType} onChange={e => setResForm({...resForm, fileType: e.target.value as any})}>
                     <option value="pdf">PDF Document</option>
                     <option value="ppt">PowerPoint (PPT)</option>
@@ -598,6 +695,57 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </div>
               ))}
             </div>
+          </div>
+        )}
+
+        {/* --- INQUIRIES SECTION --- */}
+        {activeTab === 'inquiries' && (
+          <div className="animate-in fade-in">
+             <h2 className="text-lg font-bold text-gray-800 mb-6">Received Messages ({inquiries.length})</h2>
+             <div className="grid grid-cols-1 gap-4">
+               {inquiries.map((inq) => (
+                 <div key={inq.id} className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex flex-col md:flex-row gap-6 hover:shadow-md transition-all">
+                   
+                   {/* Avatar/Icon */}
+                   <div className="hidden md:block">
+                     <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-brand-accent">
+                       <User size={24} />
+                     </div>
+                   </div>
+
+                   {/* Content */}
+                   <div className="flex-1">
+                     <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-2 gap-2">
+                       <div>
+                         <h3 className="font-bold text-lg text-brand-navy">{inq.name}</h3>
+                         <div className="flex items-center gap-4 text-sm text-gray-500 mt-1">
+                           <span className="flex items-center gap-1"><Phone size={14} /> {inq.phone}</span>
+                           <span className="flex items-center gap-1"><Calendar size={14} /> {inq.date}</span>
+                         </div>
+                       </div>
+                       <button 
+                         onClick={(e) => deleteInquiry(e, inq.id)}
+                         disabled={isDeleting === inq.id}
+                         className={`text-gray-400 hover:text-red-500 p-2 rounded hover:bg-red-50 transition-colors self-end md:self-center ${isDeleting === inq.id ? 'opacity-50 cursor-wait' : ''}`}
+                       >
+                         {isDeleting === inq.id ? <Loader2 className="animate-spin" size={20} /> : <Trash2 size={20} />}
+                       </button>
+                     </div>
+                     
+                     <div className="bg-gray-50 p-4 rounded-lg border border-gray-100 text-gray-700 leading-relaxed text-sm">
+                       {inq.message}
+                     </div>
+                   </div>
+                 </div>
+               ))}
+               
+               {inquiries.length === 0 && (
+                 <div className="text-center py-20 text-gray-400">
+                   <MessageSquare size={48} className="mx-auto mb-4 opacity-30" />
+                   <p>No messages yet.</p>
+                 </div>
+               )}
+             </div>
           </div>
         )}
 

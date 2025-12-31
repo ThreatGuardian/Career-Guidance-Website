@@ -48,7 +48,7 @@ const services: ServiceItem[] = [
 
 const Services: React.FC<ServicesProps> = ({ onBookClick }) => {
   return (
-    <section id="services" className="py-20 bg-white">
+    <section id="services" className="py-20 bg-white/60 backdrop-blur-sm">
       <div className="container mx-auto px-4 md:px-6">
         <SectionHeading 
           title="Our Services" 
@@ -59,11 +59,11 @@ const Services: React.FC<ServicesProps> = ({ onBookClick }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
           
           {/* Option 1: Just Counselling */}
-          <div className="group relative bg-white rounded-3xl p-8 border border-gray-100 shadow-lg hover:shadow-2xl hover:border-brand-accent/30 hover:-translate-y-2 transition-all duration-300 overflow-hidden">
+          <div className="group relative bg-white/90 backdrop-blur rounded-3xl p-8 border border-white/50 shadow-xl hover:shadow-2xl hover:border-brand-accent/30 hover:-translate-y-2 transition-all duration-300 overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-brand-light rounded-bl-full -mr-8 -mt-8 group-hover:bg-brand-accent/10 transition-colors duration-300"></div>
             
             <div className="relative z-10">
-              <div className="w-14 h-14 bg-blue-50 text-brand-navy rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-navy group-hover:text-white transition-colors duration-300">
+              <div className="w-14 h-14 bg-blue-50 text-brand-navy rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-navy group-hover:text-white transition-colors duration-300 shadow-sm">
                 <MessageCircle size={28} />
               </div>
               
@@ -145,11 +145,11 @@ const Services: React.FC<ServicesProps> = ({ onBookClick }) => {
           {services.map((service, index) => (
             <div 
               key={index}
-              className="group bg-gray-50 rounded-2xl p-8 hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-gray-100 relative overflow-hidden"
+              className="group bg-white/80 backdrop-blur rounded-2xl p-8 hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-white/50 relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 w-24 h-24 bg-brand-accent/5 rounded-bl-full -mr-4 -mt-4 group-hover:bg-brand-accent/10 transition-colors duration-500"></div>
               
-              <div className="w-14 h-14 bg-brand-navy/5 text-brand-navy rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-navy group-hover:text-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+              <div className="w-14 h-14 bg-brand-navy/5 text-brand-navy rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-navy group-hover:text-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-sm">
                 <service.icon size={28} strokeWidth={1.5} />
               </div>
               <h3 className="text-xl font-heading font-bold text-gray-900 mb-3 group-hover:text-brand-accent transition-colors duration-300">

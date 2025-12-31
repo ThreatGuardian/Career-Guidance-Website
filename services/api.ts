@@ -9,14 +9,15 @@ import {
   query, 
   orderBy 
 } from 'firebase/firestore';
-import { BlogPost, NotificationItem, ResourceItem } from '../types';
+import { BlogPost, NotificationItem, ResourceItem, InquiryItem } from '../types';
 
 // Collection Names in Firestore
 const COLLECTIONS = {
   BLOGS: 'blogs',
   NOTIFICATIONS: 'notifications',
   RESOURCES: 'resources',
-  REGISTRATIONS: 'registrations'
+  REGISTRATIONS: 'registrations',
+  INQUIRIES: 'inquiries'
 };
 
 // --- DATA TYPES ---
@@ -106,6 +107,17 @@ const MOCK_RESOURCES: ResourceItem[] = [
   }
 ];
 
+const MOCK_INQUIRIES: InquiryItem[] = [
+  {
+    id: 'mock-i1',
+    name: 'Rohan Deshmukh',
+    phone: '9876543210',
+    message: 'I want to know about the fees for the complete aptitude test package.',
+    date: new Date().toLocaleDateString(),
+    isRead: false
+  }
+];
+
 // --- API METHODS ---
 
 // 1. BLOGS
@@ -146,12 +158,8 @@ export const BlogService = {
       console.warn("[BlogService] Cannot delete mock data from backend.");
       return; 
     }
-    
-    // Direct delete call. If it fails, it throws.
-    // Ensure the ID is valid and exists in the 'blogs' collection.
     const docRef = doc(db, COLLECTIONS.BLOGS, id);
     await deleteDoc(docRef);
-    console.log(`[BlogService] Successfully deleted post: ${id}`);
   }
 };
 
@@ -231,7 +239,36 @@ export const ResourceService = {
   }
 };
 
-// 4. REGISTRATIONS
+// 4. INQUIRIES (Contact Form)
+export const InquiryService = {
+  create: async (data: Omit<InquiryItem, 'id'>) => {
+    const docRef = await addDoc(collection(db, COLLECTIONS.INQUIRIES), data);
+    return { id: docRef.id, ...data };
+  },
+
+  getAll: async (): Promise<InquiryItem[]> => {
+    try {
+      const snapshot = await getDocs(collection(db, COLLECTIONS.INQUIRIES));
+      if (snapshot.empty) return MOCK_INQUIRIES;
+      
+      return snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      } as InquiryItem));
+    } catch (error) {
+      console.error("Error fetching inquiries:", error);
+      return MOCK_INQUIRIES;
+    }
+  },
+
+  delete: async (id: string) => {
+    if (id.startsWith('mock-')) return;
+    const docRef = doc(db, COLLECTIONS.INQUIRIES, id);
+    await deleteDoc(docRef);
+  }
+};
+
+// 5. REGISTRATIONS
 export const RegistrationService = {
   create: async (data: Omit<RegistrationData, 'id' | 'date'>) => {
     const newReg = {
