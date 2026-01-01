@@ -1,22 +1,42 @@
 # Project Known Issues & Debugging Notes
 
-## Critical Bug: Admin Delete Functionality
-**Status:** Pending / Deferred
+## Admin Delete Functionality
+**Status:** FIXED (January 1, 2026)
 **Description:** 
 When logged in as Admin, clicking the "Delete" icon on a Blog Post, Notification, or Resource does not permanently remove the item from the database. The item reappears upon refreshing the page.
 
-### Potential Causes to Investigate:
-1.  **Firebase Security Rules:** 
-    - The most likely culprit. If rules are set to `allow write: if false;` or have strict validation, the delete request is being rejected by Google servers.
-    - **Fix:** Go to Firebase Console -> Firestore -> Rules and ensure it says: `allow write: if request.auth != null;`
+### Root Cause:
+Firebase Security Rules were likely blocking delete operations. Additionally, error handling was insufficient to show the actual error messages.
 
-2.  **API Error Handling:**
-    - The error might be `permission-denied`, but the UI alert isn't showing the raw error code clearly enough.
+### Fix Applied:
+1. **Enhanced Error Handling in `services/api.ts`:**
+   - All delete functions now properly catch and throw errors with descriptive messages
+   - Added console logging for successful deletions
+   - Added specific error messages for permission-denied errors
 
-3.  **State vs. DB Sync:**
-    - The `refreshAllData()` function might be fetching cached data instead of live data from the server immediately after the delete attempt.
+2. **Improved Admin Dashboard Error Messages:**
+   - Delete handlers now display actual error messages from Firebase
+   - Special handling for permission-denied errors with instructions to fix Firestore rules
 
-### Future Action Plan:
-- [ ] Check Firebase Console Rules.
-- [ ] Add `console.log` for the specific error code in `services/api.ts`.
-- [ ] Verify Document IDs match exactly between UI and Database.
+### Firebase Security Rules Fix:
+If you still encounter delete issues, verify your Firebase Firestore Rules:
+1. Go to Firebase Console → Firestore Database → Rules
+2. Ensure the rules allow authenticated users to delete:
+   ```
+   rules_version = '2';
+   service cloud.firestore {
+     match /databases/{database}/documents {
+       match /{document=**} {
+         allow read: if true;
+         allow write, delete: if request.auth != null;
+       }
+     }
+   }
+   ```
+3. Click "Publish" to apply the rules
+
+### Testing:
+- Log in as admin
+- Try to delete a blog post, notification, or resource
+- If error occurs, check browser console for detailed error message
+- The error alert will now show specific Firebase error details

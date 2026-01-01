@@ -158,8 +158,14 @@ export const BlogService = {
       console.warn("[BlogService] Cannot delete mock data from backend.");
       return; 
     }
-    const docRef = doc(db, COLLECTIONS.BLOGS, id);
-    await deleteDoc(docRef);
+    try {
+      const docRef = doc(db, COLLECTIONS.BLOGS, id);
+      await deleteDoc(docRef);
+      console.log(`[BlogService] Successfully deleted post: ${id}`);
+    } catch (error: any) {
+      console.error(`[BlogService] Delete failed:`, error);
+      throw new Error(`Failed to delete blog post: ${error.message || error}`);
+    }
   }
 };
 
@@ -196,8 +202,14 @@ export const NotificationService = {
 
   delete: async (id: string) => {
     if (id.startsWith('mock-')) return;
-    const docRef = doc(db, COLLECTIONS.NOTIFICATIONS, id);
-    await deleteDoc(docRef);
+    try {
+      const docRef = doc(db, COLLECTIONS.NOTIFICATIONS, id);
+      await deleteDoc(docRef);
+      console.log(`[NotificationService] Successfully deleted notification: ${id}`);
+    } catch (error: any) {
+      console.error(`[NotificationService] Delete failed:`, error);
+      throw new Error(`Failed to delete notification: ${error.message || error}`);
+    }
   }
 };
 
@@ -234,8 +246,14 @@ export const ResourceService = {
 
   delete: async (id: string) => {
     if (id.startsWith('mock-')) return;
-    const docRef = doc(db, COLLECTIONS.RESOURCES, id);
-    await deleteDoc(docRef);
+    try {
+      const docRef = doc(db, COLLECTIONS.RESOURCES, id);
+      await deleteDoc(docRef);
+      console.log(`[ResourceService] Successfully deleted resource: ${id}`);
+    } catch (error: any) {
+      console.error(`[ResourceService] Delete failed:`, error);
+      throw new Error(`Failed to delete resource: ${error.message || error}`);
+    }
   }
 };
 
@@ -263,8 +281,14 @@ export const InquiryService = {
 
   delete: async (id: string) => {
     if (id.startsWith('mock-')) return;
-    const docRef = doc(db, COLLECTIONS.INQUIRIES, id);
-    await deleteDoc(docRef);
+    try {
+      const docRef = doc(db, COLLECTIONS.INQUIRIES, id);
+      await deleteDoc(docRef);
+      console.log(`[InquiryService] Successfully deleted inquiry: ${id}`);
+    } catch (error: any) {
+      console.error(`[InquiryService] Delete failed:`, error);
+      throw new Error(`Failed to delete inquiry: ${error.message || error}`);
+    }
   }
 };
 

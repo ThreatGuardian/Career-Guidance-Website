@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { 
   CheckCircle, 
   ArrowRight, 
@@ -44,14 +44,14 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ onBack }) => {
     education: ''
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-  };
+  }, []);
 
-  const handleServiceSelect = (type: ServiceType) => {
+  const handleServiceSelect = useCallback((type: ServiceType) => {
     setFormData(prev => ({ ...prev, serviceType: type }));
-  };
+  }, []);
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -438,10 +438,10 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ onBack }) => {
   return (
     <div className="py-24 bg-gray-50 min-h-[80vh]">
       <div className="container mx-auto px-4 md:px-6">
-        {step === 'details' && <DetailsView />}
-        {step === 'form' && <FormView />}
-        {step === 'payment' && <PaymentView />}
-        {step === 'success' && <SuccessView />}
+        {step === 'details' && DetailsView()}
+        {step === 'form' && FormView()}
+        {step === 'payment' && PaymentView()}
+        {step === 'success' && SuccessView()}
       </div>
     </div>
   );

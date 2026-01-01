@@ -145,10 +145,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
       } catch (err: any) {
         console.error("Delete Error:", err);
         let msg = "Failed to delete post.";
-        if (err.message && err.message.includes('Missing or insufficient permissions')) {
-            msg += "\n\nCRITICAL: Firestore Security Rules block this action. Ensure your account is authorized.";
-        } else {
-            msg += "\nError: " + err.message;
+        if (err.message) {
+          if (err.message.includes('Missing or insufficient permissions') || err.message.includes('permission-denied')) {
+            msg += "\n\nFIREBASE SECURITY ERROR: Your Firestore security rules are blocking this delete operation. Please check Firebase Console → Firestore Database → Rules and ensure authenticated users can delete.";
+          } else {
+            msg += "\n\nError: " + err.message;
+          }
         }
         alert(msg);
       } finally {
@@ -215,8 +217,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
           setEditingNoteId(null);
           setNoteForm(initialNoteForm);
         }
-      } catch (err) {
-        alert("Error deleting notification.");
+      } catch (err: any) {
+        console.error("Delete Notification Error:", err);
+        alert("Error deleting notification: " + (err.message || err));
       } finally {
         setIsDeleting(null);
       }
@@ -327,8 +330,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
           setSelectedFile(null);
           setSelectedFileName('');
         }
-      } catch (err) {
-        alert("Error deleting resource.");
+      } catch (err: any) {
+        console.error("Delete Resource Error:", err);
+        alert("Error deleting resource: " + (err.message || err));
       } finally {
         setIsDeleting(null);
       }
@@ -347,8 +351,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
       try {
         await InquiryService.delete(id);
         await refreshAllData();
-      } catch(err) {
-        alert("Error deleting inquiry.");
+      } catch(err: any) {
+        console.error("Delete Inquiry Error:", err);
+        alert("Error deleting inquiry: " + (err.message || err));
       } finally {
         setIsDeleting(null);
       }
