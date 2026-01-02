@@ -26,8 +26,8 @@ const Hero: React.FC = () => {
           
           {/* Text Content */}
           <div className="flex-1 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-gray-200 shadow-sm text-sm text-brand-slate font-medium mb-6 animate-fade-up opacity-0">
-              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/40 backdrop-blur-md border border-white/50 shadow-sm text-sm text-brand-slate font-medium mb-6 animate-fade-up opacity-0 hover:bg-white/60 transition-colors">
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>
               Accepting New Students
             </div>
 
@@ -83,10 +83,11 @@ const Hero: React.FC = () => {
                 alt="Career Counseling Session" 
                 className="object-cover w-full h-full hover:scale-110 transition-transform duration-[1.5s]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/80 to-transparent flex flex-col justify-end p-8">
-                 <div className="bg-white/95 backdrop-blur-sm p-4 rounded-xl shadow-lg transform translate-y-4 max-w-xs hover:scale-105 transition-transform duration-300">
-                    <p className="font-heading font-bold text-brand-navy text-lg">Bhagwan Pandekar</p>
-                    <p className="text-sm text-gray-600">Senior Career Counsellor</p>
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/60 to-transparent flex flex-col justify-end p-8">
+                 <div className="bg-white/30 backdrop-blur-xl border border-white/40 p-4 rounded-2xl shadow-xl transform translate-y-4 max-w-xs hover:scale-105 transition-transform duration-300 relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent opacity-50 pointer-events-none"></div>
+                    <p className="font-heading font-bold text-white text-lg relative z-10 drop-shadow-sm">Bhagwan Pandekar</p>
+                    <p className="text-sm text-blue-50 relative z-10 font-medium">Senior Career Counsellor</p>
                  </div>
               </div>
             </div>

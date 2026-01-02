@@ -104,7 +104,7 @@ const Contact: React.FC<ContactProps> = ({ onAdminClick, isLoggedIn }) => {
                 <div>
                   <p className="text-sm text-gray-400">Visit Us</p>
                   <p className="font-medium text-white max-w-xs">
-                    Office No 4, 1st Floor, Crystal Plaza, Bavdhan, Pune - 411021
+                    Bavdhan, Pune - 411021
                   </p>
                 </div>
               </div>

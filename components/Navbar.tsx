@@ -54,8 +54,10 @@ const Navbar: React.FC<NavbarProps> = ({ onHomeClick, isBookingMode = false }) =
 
   return (
     <header 
-      className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled || isBookingMode ? 'bg-white shadow-md py-2' : 'bg-transparent py-4'
+      className={`fixed w-full z-50 transition-all duration-500 ${
+        isScrolled || isBookingMode 
+          ? 'bg-white/70 backdrop-blur-xl shadow-sm border-b border-white/20 py-2 supports-[backdrop-filter]:bg-white/60' 
+          : 'bg-transparent py-4'
       }`}
     >
       <div className="container mx-auto px-4 md:px-6">

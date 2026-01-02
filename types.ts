@@ -10,6 +10,42 @@ export interface ExamInfo {
   name: string;
   category: string;
   date: string;
+  // Extended properties
+  fullName?: string;
+  description?: string;
+  website?: string;
+  pattern?: string;
+  eligibility?: string;
+}
+
+export interface CareerPath {
+  id: string;
+  category: string;
+  icon: LucideIcon;
+  description: string;
+  roles: string[];
+  topColleges: string[];
+  avgSalary: string;
+  roadmap: RoadmapStep[];
+}
+
+export interface RoadmapStep {
+  step: string;
+  details: string;
+}
+
+export interface FlowNode {
+  id: string;
+  label: string;
+  description?: string;
+  type: 'stage' | 'stream' | 'career' | 'info';
+  next?: string[]; // IDs of children
+  data?: {
+    exams?: string[];
+    duration?: string;
+    skills?: string[];
+    outcomes?: string[];
+  }
 }
 
 export interface ScholarshipInfo {

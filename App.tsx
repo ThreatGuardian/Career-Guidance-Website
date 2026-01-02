@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import AICareerMatch from './components/AICareerMatch';
 import Services from './components/Services';
 import Resources from './components/Resources';
 import About from './components/About';
@@ -173,6 +174,7 @@ const App: React.FC = () => {
         {view === 'home' ? (
           <>
             <Hero />
+            <AICareerMatch />
             <Services onBookClick={handleBookNow} />
             <BlogSection posts={blogs} onViewPost={handleViewPost} />
             <Resources />
