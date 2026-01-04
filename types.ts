@@ -52,6 +52,7 @@ export interface ScholarshipInfo {
   name: string;
   eligibility: string;
   deadline: string;
+  link?: string;
 }
 
 export interface NavLink {
@@ -96,6 +97,7 @@ export interface InquiryItem {
   message: string;
   date: string;
   isRead: boolean;
+  status?: 'pending' | 'completed';
 }
 
 export interface ChatMessage {

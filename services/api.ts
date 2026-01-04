@@ -27,11 +27,13 @@ export interface RegistrationData {
   serviceType: 'counselling' | 'assessment';
   amount: number;
   date: string;
-  paymentStatus: 'pending' | 'paid';
+  paymentStatus: 'pending' | 'paid' | 'pending_contact' | 'completed';
   education?: string;
   address?: string;
   dob?: string;
   age?: string;
+  email?: string;
+  phone?: string;
 }
 
 // --- MOCK DATA FOR INITIALIZATION (Fallbacks) ---
@@ -279,6 +281,12 @@ export const InquiryService = {
     }
   },
 
+  update: async (id: string, data: Partial<InquiryItem>) => {
+    if (id.startsWith('mock-')) return;
+    const docRef = doc(db, COLLECTIONS.INQUIRIES, id);
+    await updateDoc(docRef, data);
+  },
+
   delete: async (id: string) => {
     if (id.startsWith('mock-')) return;
     try {
@@ -301,8 +309,14 @@ export const RegistrationService = {
       created_at: new Date() // Firestore timestamp helper
     };
     
-    const docRef = await addDoc(collection(db, COLLECTIONS.REGISTRATIONS), newReg);
-    return { id: docRef.id, ...newReg };
+    try {
+      const docRef = await addDoc(collection(db, COLLECTIONS.REGISTRATIONS), newReg);
+      return { id: docRef.id, ...newReg };
+    } catch (error) {
+      console.warn("Firebase Registration Failed (using mock fallback):", error);
+      // Fallback for demo/dev mode if backend fails
+      return { id: 'mock-reg-' + Date.now(), ...newReg };
+    }
   },
 
   getAll: async (): Promise<RegistrationData[]> => {
@@ -316,5 +330,11 @@ export const RegistrationService = {
       console.error("Error fetching registrations:", error);
       return [];
     }
+  },
+
+  update: async (id: string, data: Partial<RegistrationData>) => {
+    if (id.startsWith('mock-')) return;
+    const docRef = doc(db, COLLECTIONS.REGISTRATIONS, id);
+    await updateDoc(docRef, data);
   }
 };

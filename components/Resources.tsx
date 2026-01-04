@@ -6,10 +6,10 @@ import { CAREER_PATHS, DETAILED_EXAMS } from './ResourceData';
 import CareerPathExplorer from './CareerPathExplorer';
 
 const scholarships: ScholarshipInfo[] = [
-  { name: 'National Talent Search Exam (NTSE)', eligibility: 'Class 10th', deadline: 'September' },
-  { name: 'KVPY Fellowship', eligibility: 'Science Stream (11th/12th)', deadline: 'August' },
-  { name: 'Inspire Scholarship', eligibility: 'Top 1% in 12th Board', deadline: 'October' },
-  { name: 'G.O.I. Scholarship', eligibility: 'Minority Communities', deadline: 'November' },
+  { name: 'National Talent Search Exam (NTSE)', eligibility: 'Class 10th', deadline: 'September', link: 'https://ncert.nic.in/national-talent-examination.php' },
+  { name: 'KVPY Fellowship', eligibility: 'Science Stream (11th/12th)', deadline: 'August', link: 'http://www.kvpy.iisc.ernet.in/' },
+  { name: 'Inspire Scholarship', eligibility: 'Top 1% in 12th Board', deadline: 'October', link: 'https://online-inspire.gov.in/' },
+  { name: 'G.O.I. Scholarship', eligibility: 'Minority Communities', deadline: 'November', link: 'https://scholarships.gov.in/' },
 ];
 
 const Resources: React.FC = () => {
@@ -292,9 +292,15 @@ const Resources: React.FC = () => {
                           <p className="text-xs text-gray-400 uppercase font-semibold">Deadline</p>
                           <p className="text-sm font-medium text-brand-slate">{sch.deadline}</p>
                         </div>
-                        <button className="p-2 text-brand-accent hover:bg-blue-50 rounded-full transition-colors" aria-label="More Info">
+                        <a 
+                          href={sch.link || '#'} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="p-2 text-brand-accent hover:bg-blue-50 rounded-full transition-colors" 
+                          aria-label="More Info"
+                        >
                             <ExternalLink size={20} />
-                        </button>
+                        </a>
                       </div>
                     </div>
                   ))}

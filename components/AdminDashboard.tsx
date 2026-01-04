@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BlogPost, NotificationItem, ResourceItem, InquiryItem } from '../types';
-import { Plus, Trash2, Save, LayoutDashboard, Bell, FileText, Download, ArrowLeft, UploadCloud, Pencil, XCircle, Loader2, LogOut, User, Image as ImageIcon, MessageSquare, Phone, Calendar } from 'lucide-react';
-import { BlogService, NotificationService, ResourceService, InquiryService } from '../services/api';
+import { Plus, Trash2, Save, LayoutDashboard, Bell, FileText, Download, ArrowLeft, UploadCloud, Pencil, XCircle, Loader2, LogOut, User, Image as ImageIcon, MessageSquare, Phone, Calendar, CheckCircle, Filter } from 'lucide-react';
+import { BlogService, NotificationService, ResourceService, InquiryService, RegistrationService, RegistrationData } from '../services/api';
 import { StorageService } from '../services/storage';
 
 interface AdminDashboardProps {
@@ -21,9 +21,51 @@ interface AdminDashboardProps {
 const AdminDashboard: React.FC<AdminDashboardProps> = ({ 
   onBack, onLogout, posts, notifications, resources, inquiries, setPosts, setNotifications, setResources, setInquiries, currentUserEmail 
 }) => {
-  const [activeTab, setActiveTab] = useState<'blogs' | 'notifications' | 'downloads' | 'inquiries'>('blogs');
+  const [activeTab, setActiveTab] = useState<'blogs' | 'notifications' | 'downloads' | 'inquiries' | 'registrations'>('blogs');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDeleting, setIsDeleting] = useState<string | null>(null);
+  
+  // --- Registration State ---
+  const [registrations, setRegistrations] = useState<RegistrationData[]>([]);
+  const [regFilter, setRegFilter] = useState<'all' | 'pending' | 'completed'>('all');
+  
+  // --- Inquiry State ---
+  const [inqFilter, setInqFilter] = useState<'all' | 'pending' | 'completed'>('all');
+
+  useEffect(() => {
+    if (activeTab === 'registrations') {
+      fetchRegistrations();
+    }
+  }, [activeTab]);
+
+  const fetchRegistrations = async () => {
+    const data = await RegistrationService.getAll();
+    // Sort by date desc
+    const sorted = data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    setRegistrations(sorted);
+  };
+
+  const handleRegistrationStatus = async (id: string, newStatus: 'completed' | 'pending_contact') => {
+    if (!id) return;
+    try {
+      await RegistrationService.update(id, { paymentStatus: newStatus });
+      // Optimistic update
+      setRegistrations(prev => prev.map(r => r.id === id ? { ...r, paymentStatus: newStatus } : r));
+    } catch (error) {
+      console.error("Failed to update status", error);
+    }
+  };
+
+  const handleInquiryStatus = async (id: string, newStatus: 'completed' | 'pending') => {
+    if (!id || id.startsWith('mock-')) return;
+    try {
+      await InquiryService.update(id, { status: newStatus });
+      // Optimistic update
+      setInquiries(inquiries.map(i => i.id === id ? { ...i, status: newStatus } : i));
+    } catch (error) {
+      console.error("Failed to update inquiry status", error);
+    }
+  };
 
   // --- Blog State ---
   const initialBlogForm: Partial<BlogPost> = { title: '', content: '', excerpt: '', category: 'General', author: 'Bhagwan Pandekar', imageUrl: '' };
@@ -416,7 +458,124 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
           >
             <MessageSquare size={20} /> Messages ({inquiries.length})
           </button>
+          <button 
+            onClick={() => { setActiveTab('registrations'); }}
+            className={`px-6 py-3 rounded-lg font-medium flex items-center gap-2 transition-all ${activeTab === 'registrations' ? 'bg-white text-brand-navy shadow-md border-l-4 border-brand-navy' : 'bg-gray-200 text-gray-600 hover:bg-gray-300'}`}
+          >
+            <CheckCircle size={20} /> Registrations
+          </button>
         </div>
+
+        {/* --- REGISTRATIONS SECTION --- */}
+        {activeTab === 'registrations' && (
+          <div className="animate-in fade-in">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-lg font-bold text-gray-800">Student Registrations ({registrations.length})</h2>
+              <div className="flex items-center gap-2 bg-white p-1 rounded-lg border border-gray-200">
+                <button 
+                  onClick={() => setRegFilter('all')}
+                  className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${regFilter === 'all' ? 'bg-brand-navy text-white' : 'text-gray-600 hover:bg-gray-50'}`}
+                >
+                  All
+                </button>
+                <button 
+                  onClick={() => setRegFilter('pending')}
+                  className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${regFilter === 'pending' ? 'bg-orange-500 text-white' : 'text-gray-600 hover:bg-gray-50'}`}
+                >
+                  Pending
+                </button>
+                <button 
+                  onClick={() => setRegFilter('completed')}
+                  className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${regFilter === 'completed' ? 'bg-green-600 text-white' : 'text-gray-600 hover:bg-gray-50'}`}
+                >
+                  Completed
+                </button>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left">
+                  <thead className="bg-gray-50 border-b border-gray-200">
+                    <tr>
+                      <th className="px-6 py-4 font-semibold text-gray-700 text-sm">Student Name</th>
+                      <th className="px-6 py-4 font-semibold text-gray-700 text-sm">Service</th>
+                      <th className="px-6 py-4 font-semibold text-gray-700 text-sm">Contact</th>
+                      <th className="px-6 py-4 font-semibold text-gray-700 text-sm">Details</th>
+                      <th className="px-6 py-4 font-semibold text-gray-700 text-sm">Status</th>
+                      <th className="px-6 py-4 font-semibold text-gray-700 text-sm text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100">
+                    {registrations
+                      .filter(r => {
+                        if (regFilter === 'all') return true;
+                        if (regFilter === 'completed') return r.paymentStatus === 'completed';
+                        return r.paymentStatus !== 'completed';
+                      })
+                      .map((reg) => (
+                      <tr key={reg.id} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-6 py-4">
+                          <div className="font-medium text-gray-900">{reg.name}</div>
+                          <div className="text-xs text-gray-500">Age: {reg.age}</div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                            reg.serviceType === 'assessment' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'
+                          }`}>
+                            {reg.serviceType === 'assessment' ? 'Assessment' : 'Counselling'}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 text-sm text-gray-600">
+                          <div className="flex items-center gap-1"><Phone size={12} /> {reg.phone || 'N/A'}</div>
+                          <div className="flex items-center gap-1 mt-1"><User size={12} /> {reg.email || 'N/A'}</div>
+                        </td>
+                        <td className="px-6 py-4 text-sm text-gray-600 max-w-xs truncate" title={reg.education}>
+                          {reg.education || 'No details'}
+                        </td>
+                        <td className="px-6 py-4">
+                          {reg.paymentStatus === 'completed' ? (
+                            <span className="inline-flex items-center gap-1 text-green-600 text-sm font-medium">
+                              <CheckCircle size={14} /> Completed
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 text-orange-500 text-sm font-medium">
+                              <Loader2 size={14} /> Pending
+                            </span>
+                          )}
+                        </td>
+                        <td className="px-6 py-4 text-right">
+                          {reg.paymentStatus !== 'completed' ? (
+                            <button 
+                              onClick={() => handleRegistrationStatus(reg.id!, 'completed')}
+                              className="text-xs bg-green-50 text-green-700 hover:bg-green-100 border border-green-200 px-3 py-1.5 rounded-lg transition-colors font-medium"
+                            >
+                              Mark Done
+                            </button>
+                          ) : (
+                            <button 
+                              onClick={() => handleRegistrationStatus(reg.id!, 'pending_contact')}
+                              className="text-xs text-gray-400 hover:text-gray-600 hover:underline"
+                            >
+                              Reopen
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                    {registrations.length === 0 && (
+                      <tr>
+                        <td colSpan={6} className="px-6 py-12 text-center text-gray-400">
+                          No registrations found.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* --- BLOGS SECTION --- */}
         {activeTab === 'blogs' && (
@@ -706,15 +865,44 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
         {/* --- INQUIRIES SECTION --- */}
         {activeTab === 'inquiries' && (
           <div className="animate-in fade-in">
-             <h2 className="text-lg font-bold text-gray-800 mb-6">Received Messages ({inquiries.length})</h2>
+             <div className="flex justify-between items-center mb-6">
+               <h2 className="text-lg font-bold text-gray-800">Received Messages ({inquiries.length})</h2>
+               <div className="flex items-center gap-2 bg-white p-1 rounded-lg border border-gray-200">
+                <button 
+                  onClick={() => setInqFilter('all')}
+                  className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${inqFilter === 'all' ? 'bg-brand-navy text-white' : 'text-gray-600 hover:bg-gray-50'}`}
+                >
+                  All
+                </button>
+                <button 
+                  onClick={() => setInqFilter('pending')}
+                  className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${inqFilter === 'pending' ? 'bg-orange-500 text-white' : 'text-gray-600 hover:bg-gray-50'}`}
+                >
+                  Pending
+                </button>
+                <button 
+                  onClick={() => setInqFilter('completed')}
+                  className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${inqFilter === 'completed' ? 'bg-green-600 text-white' : 'text-gray-600 hover:bg-gray-50'}`}
+                >
+                  Completed
+                </button>
+              </div>
+             </div>
+
              <div className="grid grid-cols-1 gap-4">
-               {inquiries.map((inq) => (
-                 <div key={inq.id} className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex flex-col md:flex-row gap-6 hover:shadow-md transition-all">
+               {inquiries
+                 .filter(inq => {
+                    if (inqFilter === 'all') return true;
+                    if (inqFilter === 'completed') return inq.status === 'completed';
+                    return inq.status !== 'completed'; // Default to pending if undefined
+                 })
+                 .map((inq) => (
+                 <div key={inq.id} className={`bg-white p-6 rounded-xl shadow-sm border flex flex-col md:flex-row gap-6 hover:shadow-md transition-all ${inq.status === 'completed' ? 'border-green-200 bg-green-50/30' : 'border-gray-200'}`}>
                    
                    {/* Avatar/Icon */}
                    <div className="hidden md:block">
-                     <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-brand-accent">
-                       <User size={24} />
+                     <div className={`w-12 h-12 rounded-full flex items-center justify-center ${inq.status === 'completed' ? 'bg-green-100 text-green-600' : 'bg-blue-50 text-brand-accent'}`}>
+                       {inq.status === 'completed' ? <CheckCircle size={24} /> : <User size={24} />}
                      </div>
                    </div>
 
@@ -722,19 +910,42 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                    <div className="flex-1">
                      <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-2 gap-2">
                        <div>
-                         <h3 className="font-bold text-lg text-brand-navy">{inq.name}</h3>
+                         <h3 className="font-bold text-lg text-brand-navy flex items-center gap-2">
+                           {inq.name}
+                           {inq.status === 'completed' && <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full border border-green-200">Resolved</span>}
+                         </h3>
                          <div className="flex items-center gap-4 text-sm text-gray-500 mt-1">
                            <span className="flex items-center gap-1"><Phone size={14} /> {inq.phone}</span>
                            <span className="flex items-center gap-1"><Calendar size={14} /> {inq.date}</span>
                          </div>
                        </div>
-                       <button 
-                         onClick={(e) => deleteInquiry(e, inq.id)}
-                         disabled={isDeleting === inq.id}
-                         className={`text-gray-400 hover:text-red-500 p-2 rounded hover:bg-red-50 transition-colors self-end md:self-center ${isDeleting === inq.id ? 'opacity-50 cursor-wait' : ''}`}
-                       >
-                         {isDeleting === inq.id ? <Loader2 className="animate-spin" size={20} /> : <Trash2 size={20} />}
-                       </button>
+                       
+                       <div className="flex items-center gap-2 self-end md:self-center">
+                         {inq.status !== 'completed' ? (
+                            <button 
+                              onClick={() => handleInquiryStatus(inq.id, 'completed')}
+                              className="text-xs bg-green-50 text-green-700 hover:bg-green-100 border border-green-200 px-3 py-1.5 rounded-lg transition-colors font-medium flex items-center gap-1"
+                            >
+                              <CheckCircle size={14} /> Mark Done
+                            </button>
+                          ) : (
+                            <button 
+                              onClick={() => handleInquiryStatus(inq.id, 'pending')}
+                              className="text-xs text-gray-400 hover:text-gray-600 hover:underline"
+                            >
+                              Reopen
+                            </button>
+                          )}
+
+                         <button 
+                           onClick={(e) => deleteInquiry(e, inq.id)}
+                           disabled={isDeleting === inq.id}
+                           className={`text-gray-400 hover:text-red-500 p-2 rounded hover:bg-red-50 transition-colors ${isDeleting === inq.id ? 'opacity-50 cursor-wait' : ''}`}
+                           title="Delete Message"
+                         >
+                           {isDeleting === inq.id ? <Loader2 className="animate-spin" size={20} /> : <Trash2 size={20} />}
+                         </button>
+                       </div>
                      </div>
                      
                      <div className="bg-gray-50 p-4 rounded-lg border border-gray-100 text-gray-700 leading-relaxed text-sm">

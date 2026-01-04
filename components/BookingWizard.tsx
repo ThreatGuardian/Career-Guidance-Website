@@ -3,7 +3,6 @@ import {
   CheckCircle, 
   ArrowRight, 
   ArrowLeft, 
-  CreditCard, 
   User, 
   Calendar, 
   MapPin, 
@@ -13,7 +12,10 @@ import {
   Calculator,
   Briefcase,
   MessageCircle,
-  Sparkles
+  Sparkles,
+  Mail,
+  Phone,
+  Loader2
 } from 'lucide-react';
 import { RegistrationService } from '../services/api';
 
@@ -21,12 +23,14 @@ interface BookingWizardProps {
   onBack: () => void;
 }
 
-type Step = 'details' | 'form' | 'payment' | 'success';
+type Step = 'details' | 'form' | 'success';
 type ServiceType = 'counselling' | 'assessment';
 
 interface FormData {
   serviceType: ServiceType;
   name: string;
+  email: string;
+  phone: string;
   age: string;
   dob: string;
   address: string;
@@ -38,11 +42,14 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ onBack }) => {
   const [formData, setFormData] = useState<FormData>({
     serviceType: 'assessment', // Default selection
     name: '',
+    email: '',
+    phone: '',
     age: '',
     dob: '',
     address: '',
     education: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -53,46 +60,39 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ onBack }) => {
     setFormData(prev => ({ ...prev, serviceType: type }));
   }, []);
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStep('payment');
-    window.scrollTo(0, 0);
-  };
-
-  // Pricing Logic
-  const getPricing = () => {
-    const basePrice = formData.serviceType === 'assessment' ? 2500 : 1000;
-    const regFee = 500;
-    return {
-      base: basePrice,
-      reg: regFee,
-      total: basePrice + regFee
-    };
-  };
-
-  const pricing = getPricing();
-
-  const handlePayment = async () => {
-    // 1. Simulate Payment Gateway (Razorpay/Stripe would go here)
-    // await Razorpay.open(...)
+    setIsSubmitting(true);
     
-    // 2. Save Registration to Backend (Simulated)
+    // Simulate API Call & Email Dispatch
     try {
+      // In a real app, this would send data to backend which triggers the email
+      // For now, we use EmailJS or similar service on the client side if configured
+      
       await RegistrationService.create({
         name: formData.name,
         serviceType: formData.serviceType,
-        amount: pricing.total,
-        paymentStatus: 'paid'
+        amount: 0, // No payment
+        paymentStatus: 'pending_contact',
+        email: formData.email,
+        phone: formData.phone,
+        education: formData.education,
+        age: formData.age,
+        dob: formData.dob,
+        address: formData.address
       });
       
-      // 3. Move to Success
+      // Simulate Email Sending Delay
       setTimeout(() => {
         setStep('success');
         window.scrollTo(0, 0);
+        setIsSubmitting(false);
       }, 1500);
       
     } catch (error) {
-      alert("Payment failed or Data save error");
+      console.error("Registration failed", error);
+      alert("Something went wrong. Please try again.");
+      setIsSubmitting(false);
     }
   };
 
@@ -212,7 +212,6 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ onBack }) => {
               </div>
               <h3 className="font-bold text-gray-800">Expert Counselling Session</h3>
               <p className="text-sm text-gray-500 mt-1">45-60 min discussion. Best for specific query resolution.</p>
-              <p className="text-brand-navy font-bold mt-3">₹1,000 + Reg Fee</p>
             </div>
 
             {/* Option 2 */}
@@ -233,7 +232,6 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ onBack }) => {
               </div>
               <h3 className="font-bold text-gray-800">Complete Assessment</h3>
               <p className="text-sm text-gray-500 mt-1">Full psychometric testing + 20 pg Report + Counselling.</p>
-              <p className="text-brand-navy font-bold mt-3">₹2,500 + Reg Fee</p>
             </div>
           </div>
         </div>
@@ -270,6 +268,40 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ onBack }) => {
                 className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-brand-accent/20 focus:border-brand-accent outline-none transition-all shadow-sm hover:bg-white"
                 placeholder="e.g. 16"
               />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-brand-slate">Email Address</label>
+              <div className="relative group">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-brand-accent transition-colors" size={18} />
+                <input 
+                  required
+                  type="email" 
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-brand-accent/20 focus:border-brand-accent outline-none transition-all shadow-sm hover:bg-white"
+                  placeholder="e.g. rahul@example.com"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-brand-slate">Phone Number</label>
+              <div className="relative group">
+                <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-brand-accent transition-colors" size={18} />
+                <input 
+                  required
+                  type="tel" 
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-brand-accent/20 focus:border-brand-accent outline-none transition-all shadow-sm hover:bg-white"
+                  placeholder="e.g. 9876543210"
+                />
+              </div>
             </div>
           </div>
 
@@ -324,70 +356,19 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ onBack }) => {
         <div className="pt-2">
           <button 
             type="submit"
-            className="w-full bg-brand-navy hover:bg-brand-accent text-white font-bold py-4 rounded-xl transition-all shadow-xl hover:-translate-y-1"
+            disabled={isSubmitting}
+            className="w-full bg-brand-navy hover:bg-brand-accent text-white font-bold py-4 rounded-xl transition-all shadow-xl hover:-translate-y-1 disabled:opacity-70 disabled:cursor-not-allowed flex justify-center items-center gap-2"
           >
-            Proceed to Payment Summary
+            {isSubmitting ? (
+              <>
+                <Loader2 className="animate-spin" size={20} /> Processing Registration...
+              </>
+            ) : (
+              'Submit Registration'
+            )}
           </button>
         </div>
       </form>
-    </div>
-  );
-
-  const PaymentView = () => (
-    <div className="max-w-md mx-auto animate-in fade-in slide-in-from-right-8 duration-500">
-      <div className="mb-8 flex items-center gap-2 text-sm text-gray-500">
-        <button onClick={() => setStep('form')} className="hover:text-brand-accent flex items-center gap-1">
-          <ArrowLeft size={16} /> Back to Form
-        </button>
-        <span>/</span>
-        <span className="font-medium text-brand-navy">Payment</span>
-      </div>
-
-      <div className="bg-white border border-gray-200 rounded-2xl shadow-xl overflow-hidden mb-8">
-        <div className="bg-gray-50 p-6 border-b border-gray-100">
-          <h3 className="text-lg font-bold text-brand-navy">Order Summary</h3>
-          <p className="text-xs text-gray-500 mt-1">Review your selected plan</p>
-        </div>
-        <div className="p-6 space-y-4">
-          <div className="flex justify-between items-center text-gray-800">
-            <span className="font-medium">
-              {formData.serviceType === 'assessment' ? 'Complete Assessment Package' : 'Expert Counselling Session'}
-            </span>
-            <span className="font-bold">₹{pricing.base.toLocaleString()}</span>
-          </div>
-          <div className="flex justify-between items-center text-gray-600 text-sm">
-            <span>Registration Fee</span>
-            <span>₹{pricing.reg}</span>
-          </div>
-          <div className="border-t border-dashed border-gray-300 pt-4 flex justify-between items-center text-xl font-bold text-brand-navy">
-            <span>Total Payable</span>
-            <span>₹{pricing.total.toLocaleString()}</span>
-          </div>
-        </div>
-      </div>
-
-      <h3 className="font-bold text-gray-700 mb-4">Select Payment Method</h3>
-      <div className="space-y-3 mb-8">
-        <div className="flex items-center gap-3 p-4 border-2 border-brand-accent bg-blue-50/50 rounded-xl cursor-pointer hover:bg-blue-50 transition-colors">
-          <CreditCard className="text-brand-accent" />
-          <span className="font-bold text-brand-navy">Credit / Debit Card</span>
-          <div className="ml-auto w-4 h-4 rounded-full border-4 border-brand-accent"></div>
-        </div>
-        <div className="flex items-center gap-3 p-4 border border-gray-200 rounded-xl opacity-60 cursor-not-allowed bg-gray-50">
-          <span className="font-medium text-gray-500">UPI / Net Banking (Coming Soon)</span>
-        </div>
-      </div>
-
-      <button 
-        onClick={handlePayment}
-        className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-green-600/30 hover:-translate-y-0.5 flex justify-center items-center gap-2"
-      >
-        Pay ₹{pricing.total.toLocaleString()} Securely
-      </button>
-      <p className="text-xs text-center text-gray-400 mt-4 flex items-center justify-center gap-1">
-        <span className="w-2 h-2 bg-green-500 rounded-full inline-block"></span>
-        Secure SSL Encrypted Transaction
-      </p>
     </div>
   );
 
@@ -396,7 +377,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ onBack }) => {
       <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
         <CheckCircle className="text-green-600 w-12 h-12" />
       </div>
-      <h2 className="text-3xl font-heading font-bold text-brand-navy mb-4">Payment Successful!</h2>
+      <h2 className="text-3xl font-heading font-bold text-brand-navy mb-4">Registration Successful!</h2>
       <p className="text-lg text-gray-600 mb-8">
         Thank you, <strong>{formData.name}</strong>. Your registration for <br/>
         <span className="font-bold text-brand-accent">
@@ -411,17 +392,11 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ onBack }) => {
         <ul className="space-y-4 text-gray-600 text-sm">
           <li className="flex items-start gap-3">
             <div className="bg-brand-navy/10 text-brand-navy font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs mt-0.5">1</div>
-            <span>You will receive a confirmation email with details shortly.</span>
+            <span>A confirmation email has been sent to <strong>{formData.email}</strong> with your registration details.</span>
           </li>
-          {formData.serviceType === 'assessment' && (
-             <li className="flex items-start gap-3">
-              <div className="bg-brand-navy/10 text-brand-navy font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs mt-0.5">2</div>
-              <span>Complete the online aptitude tests link sent to your email within 48 hours.</span>
-            </li>
-          )}
           <li className="flex items-start gap-3">
-            <div className="bg-brand-navy/10 text-brand-navy font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs mt-0.5">{formData.serviceType === 'assessment' ? '3' : '2'}</div>
-            <span>Our team will call you to schedule your session with Mr. Pandekar.</span>
+            <div className="bg-brand-navy/10 text-brand-navy font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs mt-0.5">2</div>
+            <span>Our counselor will review your profile and contact you shortly on <strong>{formData.phone}</strong>.</span>
           </li>
         </ul>
       </div>
@@ -440,7 +415,6 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ onBack }) => {
       <div className="container mx-auto px-4 md:px-6">
         {step === 'details' && DetailsView()}
         {step === 'form' && FormView()}
-        {step === 'payment' && PaymentView()}
         {step === 'success' && SuccessView()}
       </div>
     </div>
