@@ -18,6 +18,7 @@ import {
   Loader2
 } from 'lucide-react';
 import { RegistrationService } from '../services/api';
+import { EmailService } from '../services/email';
 
 interface BookingWizardProps {
   onBack: () => void;
@@ -64,11 +65,8 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ onBack }) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate API Call & Email Dispatch
     try {
-      // In a real app, this would send data to backend which triggers the email
-      // For now, we use EmailJS or similar service on the client side if configured
-      
+      // 1. Save to Firebase
       await RegistrationService.create({
         name: formData.name,
         serviceType: formData.serviceType,
@@ -82,12 +80,18 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ onBack }) => {
         address: formData.address
       });
       
-      // Simulate Email Sending Delay
-      setTimeout(() => {
-        setStep('success');
-        window.scrollTo(0, 0);
-        setIsSubmitting(false);
-      }, 1500);
+      // 2. Send Confirmation Email (EmailJS)
+      // Note: Ensure you have configured your credentials in services/email.ts
+      await EmailService.sendRegistrationConfirmation({
+        name: formData.name,
+        email: formData.email,
+        serviceType: formData.serviceType,
+        date: new Date().toLocaleDateString()
+      });
+      
+      setStep('success');
+      window.scrollTo(0, 0);
+      setIsSubmitting(false);
       
     } catch (error) {
       console.error("Registration failed", error);
