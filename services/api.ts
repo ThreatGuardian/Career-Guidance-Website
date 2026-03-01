@@ -7,7 +7,9 @@ import {
   deleteDoc, 
   doc, 
   query, 
-  orderBy 
+  orderBy,
+  setDoc,
+  getDoc
 } from 'firebase/firestore';
 import { BlogPost, NotificationItem, ResourceItem, InquiryItem } from '../types';
 
@@ -19,6 +21,10 @@ const COLLECTIONS = {
   REGISTRATIONS: 'registrations',
   INQUIRIES: 'inquiries'
 };
+
+// Global config document to track when site has real data
+const CONFIG_COLLECTION = 'app_config';
+const CONFIG_DOC_ID = 'state';
 
 // --- DATA TYPES ---
 export interface RegistrationData {
@@ -120,17 +126,43 @@ const MOCK_INQUIRIES: InquiryItem[] = [
   }
 ];
 
+// --- GLOBAL MOCK TOGGLE HELPERS ---
+
+// Once any real content is created, we mark mocks as disabled globally in Firestore.
+const disableMocksGlobally = async () => {
+  try {
+    await setDoc(
+      doc(db, CONFIG_COLLECTION, CONFIG_DOC_ID),
+      { mocksDisabled: true },
+      { merge: true }
+    );
+  } catch (error) {
+    console.warn('Failed to set mocksDisabled flag:', error);
+  }
+};
+
+const areMocksDisabled = async (): Promise<boolean> => {
+  try {
+    const snap = await getDoc(doc(db, CONFIG_COLLECTION, CONFIG_DOC_ID));
+    return snap.exists() && snap.data()?.mocksDisabled === true;
+  } catch (error) {
+    console.warn('Failed to read mocksDisabled flag:', error);
+    return false;
+  }
+};
+
 // --- API METHODS ---
 
 // 1. BLOGS
 export const BlogService = {
   getAll: async (): Promise<BlogPost[]> => {
     try {
+      const mocksDisabled = await areMocksDisabled();
       const q = query(collection(db, COLLECTIONS.BLOGS));
       const snapshot = await getDocs(q);
       
       if (snapshot.empty) {
-        return MOCK_BLOGS;
+        return mocksDisabled ? [] : MOCK_BLOGS;
       }
       
       return snapshot.docs.map(doc => ({
@@ -139,12 +171,14 @@ export const BlogService = {
       } as BlogPost));
     } catch (error) {
       console.error("Error fetching blogs:", error);
-      return MOCK_BLOGS;
+      const mocksDisabled = await areMocksDisabled();
+      return mocksDisabled ? [] : MOCK_BLOGS;
     }
   },
   
   create: async (post: Omit<BlogPost, 'id'>) => {
     const docRef = await addDoc(collection(db, COLLECTIONS.BLOGS), post);
+    await disableMocksGlobally();
     return { id: docRef.id, ...post };
   },
 
@@ -175,10 +209,11 @@ export const BlogService = {
 export const NotificationService = {
   getAll: async (): Promise<NotificationItem[]> => {
     try {
+      const mocksDisabled = await areMocksDisabled();
       const snapshot = await getDocs(collection(db, COLLECTIONS.NOTIFICATIONS));
       
       if (snapshot.empty) {
-        return MOCK_NOTIFICATIONS;
+        return mocksDisabled ? [] : MOCK_NOTIFICATIONS;
       }
 
       return snapshot.docs.map(doc => ({
@@ -187,12 +222,14 @@ export const NotificationService = {
       } as NotificationItem));
     } catch (error) {
       console.error("Error fetching notifications:", error);
-      return MOCK_NOTIFICATIONS;
+      const mocksDisabled = await areMocksDisabled();
+      return mocksDisabled ? [] : MOCK_NOTIFICATIONS;
     }
   },
 
   create: async (item: Omit<NotificationItem, 'id'>) => {
     const docRef = await addDoc(collection(db, COLLECTIONS.NOTIFICATIONS), item);
+    await disableMocksGlobally();
     return { id: docRef.id, ...item };
   },
 
@@ -219,10 +256,11 @@ export const NotificationService = {
 export const ResourceService = {
   getAll: async (): Promise<ResourceItem[]> => {
     try {
+      const mocksDisabled = await areMocksDisabled();
       const snapshot = await getDocs(collection(db, COLLECTIONS.RESOURCES));
       
       if (snapshot.empty) {
-        return MOCK_RESOURCES;
+        return mocksDisabled ? [] : MOCK_RESOURCES;
       }
 
       return snapshot.docs.map(doc => ({
@@ -231,12 +269,14 @@ export const ResourceService = {
       } as ResourceItem));
     } catch (error) {
       console.error("Error fetching resources:", error);
-      return MOCK_RESOURCES;
+      const mocksDisabled = await areMocksDisabled();
+      return mocksDisabled ? [] : MOCK_RESOURCES;
     }
   },
 
   create: async (item: Omit<ResourceItem, 'id'>) => {
     const docRef = await addDoc(collection(db, COLLECTIONS.RESOURCES), item);
+    await disableMocksGlobally();
     return { id: docRef.id, ...item };
   },
 
@@ -263,13 +303,15 @@ export const ResourceService = {
 export const InquiryService = {
   create: async (data: Omit<InquiryItem, 'id'>) => {
     const docRef = await addDoc(collection(db, COLLECTIONS.INQUIRIES), data);
+    await disableMocksGlobally();
     return { id: docRef.id, ...data };
   },
 
   getAll: async (): Promise<InquiryItem[]> => {
     try {
+      const mocksDisabled = await areMocksDisabled();
       const snapshot = await getDocs(collection(db, COLLECTIONS.INQUIRIES));
-      if (snapshot.empty) return MOCK_INQUIRIES;
+      if (snapshot.empty) return mocksDisabled ? [] : MOCK_INQUIRIES;
       
       return snapshot.docs.map(doc => ({
         id: doc.id,
@@ -277,7 +319,8 @@ export const InquiryService = {
       } as InquiryItem));
     } catch (error) {
       console.error("Error fetching inquiries:", error);
-      return MOCK_INQUIRIES;
+      const mocksDisabled = await areMocksDisabled();
+      return mocksDisabled ? [] : MOCK_INQUIRIES;
     }
   },
 
@@ -311,6 +354,7 @@ export const RegistrationService = {
     
     try {
       const docRef = await addDoc(collection(db, COLLECTIONS.REGISTRATIONS), newReg);
+      await disableMocksGlobally();
       return { id: docRef.id, ...newReg };
     } catch (error) {
       console.warn("Firebase Registration Failed (using mock fallback):", error);

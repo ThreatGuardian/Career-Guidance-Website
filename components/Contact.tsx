@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Phone, Mail, MapPin, MessageCircle, Facebook, Instagram, Linkedin, Eye, Lock, LayoutDashboard, Send, Loader2, CheckCircle } from 'lucide-react';
 import { InquiryService } from '../services/api';
+import type { InquiryItem } from '../types';
 
 interface ContactProps {
   onAdminClick?: () => void;
   isLoggedIn?: boolean;
+  onInquiryCreated?: (inquiry: InquiryItem) => void;
 }
 
-const Contact: React.FC<ContactProps> = ({ onAdminClick, isLoggedIn }) => {
+const Contact: React.FC<ContactProps> = ({ onAdminClick, isLoggedIn, onInquiryCreated }) => {
   const [viewCount, setViewCount] = useState<number>(15420);
   
   // Form State
@@ -42,13 +44,19 @@ const Contact: React.FC<ContactProps> = ({ onAdminClick, isLoggedIn }) => {
 
     setIsSubmitting(true);
     try {
-      await InquiryService.create({
+      const created = await InquiryService.create({
         name: formData.name,
         phone: formData.phone,
         message: formData.message,
         date: new Date().toLocaleDateString(),
         isRead: false
       });
+
+      // Update global inquiries list if parent provided a handler
+      if (onInquiryCreated) {
+        onInquiryCreated(created);
+      }
+
       setSubmitStatus('success');
       setFormData({ name: '', phone: '', message: '' });
       setTimeout(() => setSubmitStatus('idle'), 5000);

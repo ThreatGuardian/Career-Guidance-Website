@@ -189,7 +189,11 @@ const App: React.FC = () => {
       </main>
       
       <div className="relative z-10">
-        <Contact onAdminClick={handleAdminClick} isLoggedIn={!!user} />
+        <Contact 
+          onAdminClick={handleAdminClick} 
+          isLoggedIn={!!user}
+          onInquiryCreated={(inquiry) => setInquiries((prev) => [...prev, inquiry])}
+        />
       </div>
     </div>
   );

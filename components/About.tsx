@@ -17,8 +17,8 @@ const About: React.FC = () => {
             <div className="relative">
               <div className="absolute inset-0 bg-brand-navy rounded-2xl rotate-3 opacity-10 scale-105 animate-pulse"></div>
               <img 
-                src="https://picsum.photos/600/800?grayscale" 
-                alt="Bhagwan Pandekar" 
+                src="/images/counseller.png" 
+                alt="Bhagwan Pandekar - Career Counsellor" 
                 className="relative rounded-2xl shadow-xl w-full h-auto object-cover aspect-[3/4] hover:scale-[1.02] transition-transform duration-500"
               />
               <div className="absolute -bottom-8 -right-8 bg-white/90 backdrop-blur p-6 rounded-xl shadow-lg border border-white/50 hidden md:block animate-fade-up">
