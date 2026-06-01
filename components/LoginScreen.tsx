@@ -39,8 +39,15 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess, onBack }) => 
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-300">
+    <div className="min-h-screen bg-gradient-to-br from-brand-navy via-blue-900 to-brand-navy flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-[-20%] left-[-10%] w-96 h-96 bg-blue-500/20 rounded-full blur-[100px] animate-blob"></div>
+        <div className="absolute bottom-[-20%] right-[-10%] w-96 h-96 bg-purple-500/20 rounded-full blur-[100px] animate-blob animation-delay-2000"></div>
+        <div className="absolute top-[30%] right-[20%] w-64 h-64 bg-brand-accent/10 rounded-full blur-[80px] animate-blob animation-delay-4000"></div>
+      </div>
+
+      <div className="bg-white/95 backdrop-blur-xl w-full max-w-md rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-300 relative z-10 border border-white/30">
         
         {/* Header */}
         <div className="bg-brand-navy p-8 text-center relative overflow-hidden">

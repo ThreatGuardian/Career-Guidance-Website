@@ -38,7 +38,7 @@ interface FormData {
   education: string;
 }
 
-const BookingWizard: React.FC<BookingWizardProps> = ({ onBack }) => {
+const BookingWizard: React.FC<BookingWizardProps> = ({ onBack, onComplete }) => {
   const [step, setStep] = useState<Step>('details');
   const [formData, setFormData] = useState<FormData>({
     serviceType: 'assessment', // Default selection
@@ -92,6 +92,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ onBack }) => {
       setStep('success');
       window.scrollTo(0, 0);
       setIsSubmitting(false);
+      onComplete?.();
       
     } catch (error) {
       console.error("Registration failed", error);

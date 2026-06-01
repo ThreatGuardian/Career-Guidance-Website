@@ -14,14 +14,33 @@ import LoginScreen from './components/LoginScreen';
 import NotificationSystem from './components/NotificationSystem';
 import ArticleView from './components/ArticleView';
 import BackgroundElements from './components/BackgroundElements';
+import ErrorBoundary from './components/ErrorBoundary';
+import Testimonials from './components/Testimonials';
+import FAQ from './components/FAQ';
+import AssessmentLogin from './components/AssessmentLogin';
+import AssessmentScreen from './components/AssessmentScreen';
+import ResultsScreen from './components/ResultsScreen';
+import DashboardScreen from './components/DashboardScreen';
+import AdminLogin from './components/AdminLogin';
+import { AssessmentProgress } from './services/assessmentStorage';
+import { ScoringEngine, UserProfile } from './services/scoringEngine';
+import { CareerMatching, TopCareer } from './services/careerMatching';
+import { trackAnalyticsEvent } from './lib/analytics';
+import { TranslationProvider } from './translations';
 import { BlogPost, NotificationItem, ResourceItem, InquiryItem } from './types';
 import { BlogService, NotificationService, ResourceService, InquiryService } from './services/api';
 import { AuthService } from './services/auth';
 import { User } from 'firebase/auth';
 
 const App: React.FC = () => {
-  const [view, setView] = useState<'home' | 'booking' | 'admin' | 'login' | 'article'>('home');
+  const [view, setView] = useState<'home' | 'booking' | 'admin' | 'login' | 'article' | 'assessment-login' | 'assessment' | 'results' | 'dashboard' | 'admin-login' | 'admin-dashboard'>('home');
   const [user, setUser] = useState<User | null>(null);
+  
+  // Assessment State
+  const [assessmentUserData, setAssessmentUserData] = useState<any>(null);
+  const [assessmentAnswers, setAssessmentAnswers] = useState<Record<string, number>>({});
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  const [topCareers, setTopCareers] = useState<TopCareer[]>([]);
   
   // Data State
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
@@ -30,6 +49,9 @@ const App: React.FC = () => {
   const [inquiries, setInquiries] = useState<InquiryItem[]>([]);
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Admin state
+  const [adminToken, setAdminToken] = useState<string | null>(null);
 
   // 1. Listen for Auth Changes (Session Persistence)
   useEffect(() => {
@@ -83,9 +105,41 @@ const App: React.FC = () => {
       case 'admin':
         document.title = `Dashboard | ${baseTitle}`;
         break;
+      case 'assessment-login':
+        document.title = `Start Assessment | ${baseTitle}`;
+        break;
+      case 'assessment':
+        document.title = `Career Assessment | ${baseTitle}`;
+        break;
+      case '#/admin':
+        setView(adminToken ? 'admin-dashboard' : 'admin-login');
+        break;
+      case '#/resources':
+        document.title = `Your Career Matches | ${baseTitle}`;
+        break;
+      case 'dashboard':
+        document.title = `My Assessments | ${baseTitle}`;
+        break;
       // Article title is handled in ArticleView component
       default:
         document.title = baseTitle;
+    }
+  }, [view]);
+
+  // FIX: Redirect unauthenticated users away from admin (moved from render body to useEffect)
+  useEffect(() => {
+    if (view === 'admin' && !user) {
+      setView('login');
+    }
+  }, [view, user]);
+
+  // Basic URL sync based on view state
+  useEffect(() => {
+    if (view === 'home') window.location.hash = '';
+    else if (view === 'admin-login' || view === 'admin-dashboard') window.location.hash = '#/admin';
+    else if (view === 'dashboard') window.location.hash = '#/dashboard';
+    else if (!['assessment', 'results', 'assessment-login', 'article'].includes(view)) {
+      window.location.hash = `#/${view}`;
     }
   }, [view]);
 
@@ -130,6 +184,136 @@ const App: React.FC = () => {
     setView('article');
   };
 
+  // Assessment handlers
+  const handleStartAssessment = () => {
+    setView('assessment-login');
+    window.scrollTo(0, 0);
+  };
+
+  // --- Assessment Flow Handlers ---
+
+  const handleAssessmentLoginSuccess = (userData: any) => {
+    setAssessmentUserData(userData);
+    trackAnalyticsEvent('ASSESSMENT_STARTED', userData.email);
+    setView('assessment');
+    window.scrollTo(0, 0);
+  };
+
+  const handleDashboardRedirect = (email: string) => {
+    setAssessmentUserData({ email });
+    setView('dashboard');
+    window.scrollTo(0, 0);
+  };
+
+  const handleAssessmentComplete = (progress: AssessmentProgress) => {
+    trackAnalyticsEvent('ASSESSMENT_COMPLETED', progress.userId, { 
+      timeTaken: progress.timeTaken 
+    });
+
+    // 1. Calculate Scores based on raw answers & time
+    const profile = ScoringEngine.calculateScores(progress.answers, progress.timeTaken);
+    setUserProfile(profile);
+    setAssessmentAnswers(progress.answers);
+
+    // 2. Run Career Matching Algorithm
+    const matches = CareerMatching.matchCareers(profile);
+    setTopCareers(matches);
+
+    // 3. Display Results
+    setView('results');
+    window.scrollTo(0, 0);
+  };
+
+  // --- Admin Flow Handlers ---
+  const handleAdminLoginSuccess = (token: string) => {
+    setAdminToken(token);
+    setView('admin-dashboard');
+    window.scrollTo(0, 0);
+  };
+
+  const handleAdminLogout = () => {
+    setAdminToken(null);
+    setView('admin-login');
+  };
+
+  // --- Render ---
+
+  if (view === 'admin-login') {
+    return <AdminLogin onLoginSuccess={handleAdminLoginSuccess} onBack={handleGoHome} />;
+  }
+
+  if (view === 'admin-dashboard' && adminToken) {
+    return <AdminDashboard token={adminToken} onLogout={handleAdminLogout} />;
+  }
+
+  if (view === 'results' && userProfile && assessmentUserData) {
+    return (
+      <ResultsScreen
+        userProfile={userProfile}
+        topCareers={topCareers}
+        userData={assessmentUserData}
+        answers={assessmentAnswers}
+        onBookClick={handleBookNow}
+        onBack={handleGoHome}
+      />
+    );
+  }
+
+  if (view === 'dashboard' && assessmentUserData?.email) {
+    return (
+      <DashboardScreen
+        userEmail={assessmentUserData.email}
+        onBack={handleGoHome}
+        onViewReport={(assessmentData) => {
+          // Populate the results screen with historical data
+          setUserProfile({
+            riasec: assessmentData.riasec,
+            personality: assessmentData.personality,
+            skills: assessmentData.skills,
+            reliability: assessmentData.reliability
+          });
+          setTopCareers(assessmentData.topCareers);
+          setAssessmentUserData({
+            name: assessmentData.userName,
+            email: assessmentData.userEmail,
+            dob: assessmentData.dob,
+            gender: assessmentData.gender,
+            mobile: assessmentData.mobile,
+            school: assessmentData.school,
+            classYear: assessmentData.classYear,
+            stream: assessmentData.stream,
+            city: assessmentData.city,
+            parentName: assessmentData.parentName,
+            parentMobile: assessmentData.parentMobile
+          });
+          localStorage.setItem(`ai_report_${assessmentData.userEmail}`, JSON.stringify(assessmentData.aiReport));
+          setView('results');
+          window.scrollTo(0, 0);
+        }}
+      />
+    );
+  }
+
+  if (view === 'assessment-login') {
+    return (
+      <AssessmentLogin 
+        onLoginSuccess={handleAssessmentLoginSuccess}
+        onDashboardRedirect={handleDashboardRedirect}
+        onBack={handleGoHome} 
+      />
+    );
+  }
+
+  if (view === 'assessment' && assessmentUserData) {
+    return (
+      <AssessmentScreen
+        userId={assessmentUserData.email}
+        onComplete={handleAssessmentComplete}
+        onBack={handleGoHome}
+      />
+    );
+  }
+
   if (view === 'login') {
     return (
       <LoginScreen 
@@ -141,8 +325,8 @@ const App: React.FC = () => {
 
   if (view === 'admin') {
     if (!user) {
-        setView('login');
-        return null; 
+      // Render nothing while the useEffect redirects
+      return null; 
     }
     return (
       <AdminDashboard 
@@ -174,15 +358,19 @@ const App: React.FC = () => {
         {view === 'home' ? (
           <>
             <Hero />
-            <AICareerMatch />
+            <AICareerMatch onStartAssessment={handleStartAssessment} />
             <Services onBookClick={handleBookNow} />
+            <Testimonials />
             <BlogSection posts={blogs} onViewPost={handleViewPost} />
             <Resources />
             <Downloads resources={resources} />
             <About />
+            <FAQ />
           </>
         ) : view === 'booking' ? (
-          <BookingWizard onBack={handleGoHome} />
+          <BookingWizard onBack={handleGoHome} onComplete={() => {
+            if (assessmentUserData?.email) trackAnalyticsEvent('COUNSELLING_FORM_SUBMITTED', assessmentUserData.email);
+          }} />
         ) : view === 'article' && selectedPost ? (
           <ArticleView post={selectedPost} onBack={handleGoHome} />
         ) : null}
@@ -199,4 +387,13 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+// Wrap with ErrorBoundary and TranslationProvider
+const WrappedApp: React.FC = () => (
+  <ErrorBoundary>
+    <TranslationProvider>
+      <App />
+    </TranslationProvider>
+  </ErrorBoundary>
+);
+
+export default WrappedApp;

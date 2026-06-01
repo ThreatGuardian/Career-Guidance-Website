@@ -1,0 +1,351 @@
+{
+  "assessment": {
+    "title": "Career Discovery Assessment",
+    "description": "A 55-question career assessment designed for students aged 15–25 to identify strengths, personality traits, and career inclinations.",
+    "age_group": "15–25",
+    "scale": {
+      "type": "Likert",
+      "min": 1,
+      "max": 5,
+      "labels": {
+        "1": "Strongly Disagree",
+        "2": "Disagree",
+        "3": "Neutral",
+        "4": "Agree",
+        "5": "Strongly Agree"
+      }
+    },
+    "sections": [
+      {
+        "section_id": "S1",
+        "title": "Career Interests",
+        "description": "These questions explore what kinds of activities and environments naturally appeal to you.",
+        "framework": "RIASEC",
+        "question_count": 25,
+        "scoring_guide": {
+          "R": "Realistic – scores from questions tagged R; high scorers suit technical, hands-on careers",
+          "I": "Investigative – high scorers suit research, science, analytical careers",
+          "A": "Artistic – high scorers suit creative, expressive careers",
+          "S": "Social – high scorers suit people-oriented, helping, teaching careers",
+          "E": "Enterprising – high scorers suit leadership, business, persuasion careers",
+          "C": "Conventional – high scorers suit structured, organized, data-driven careers"
+        },
+        "questions": [
+          {
+            "id": "S1Q01",
+            "text": "I enjoy building, fixing, or assembling physical objects with my hands.",
+            "tags": ["RIASEC", "R"]
+          },
+          {
+            "id": "S1Q02",
+            "text": "I like working outdoors or with tools, machines, or equipment.",
+            "tags": ["RIASEC", "R"]
+          },
+          {
+            "id": "S1Q03",
+            "text": "I feel satisfied when I complete a hands-on technical task successfully.",
+            "tags": ["RIASEC", "R"]
+          },
+          {
+            "id": "S1Q04",
+            "text": "I prefer jobs that involve physical activity over jobs done at a desk.",
+            "tags": ["RIASEC", "R"]
+          },
+          {
+            "id": "S1Q05",
+            "text": "I am drawn to how things like engines, circuits, or machines actually work.",
+            "tags": ["RIASEC", "R"]
+          },
+          {
+            "id": "S1Q06",
+            "text": "I enjoy conducting experiments or investigating how natural phenomena occur.",
+            "tags": ["RIASEC", "I"]
+          },
+          {
+            "id": "S1Q07",
+            "text": "I like analysing data or solving complex problems that require logical thinking.",
+            "tags": ["RIASEC", "I"]
+          },
+          {
+            "id": "S1Q08",
+            "text": "I often wonder about the deeper reasons behind things I observe in everyday life.",
+            "tags": ["RIASEC", "I"]
+          },
+          {
+            "id": "S1Q09",
+            "text": "I enjoy reading about science, technology, or research discoveries in my free time.",
+            "tags": ["RIASEC", "I"]
+          },
+          {
+            "id": "S1Q10",
+            "text": "I would rather figure out how something works on my own than follow a set procedure.",
+            "tags": ["RIASEC", "I"]
+          },
+          {
+            "id": "S1Q11",
+            "text": "I enjoy expressing my ideas through art, music, writing, or other creative mediums.",
+            "tags": ["RIASEC", "A"]
+          },
+          {
+            "id": "S1Q12",
+            "text": "I prefer tasks that allow me to be original rather than follow strict guidelines.",
+            "tags": ["RIASEC", "A"]
+          },
+          {
+            "id": "S1Q13",
+            "text": "I find creative projects more engaging than structured or repetitive tasks.",
+            "tags": ["RIASEC", "A"]
+          },
+          {
+            "id": "S1Q14",
+            "text": "I notice and appreciate design, aesthetics, and visual details in my environment.",
+            "tags": ["RIASEC", "A"]
+          },
+          {
+            "id": "S1Q15",
+            "text": "I enjoy storytelling, performing, or presenting ideas in compelling ways.",
+            "tags": ["RIASEC", "A"]
+          },
+          {
+            "id": "S1Q16",
+            "text": "I find fulfillment in helping others solve their personal or academic problems.",
+            "tags": ["RIASEC", "S"]
+          },
+          {
+            "id": "S1Q17",
+            "text": "I enjoy working in teams and collaborating with people from different backgrounds.",
+            "tags": ["RIASEC", "S"]
+          },
+          {
+            "id": "S1Q18",
+            "text": "I feel energised when I explain concepts to others and see them understand.",
+            "tags": ["RIASEC", "S"]
+          },
+          {
+            "id": "S1Q19",
+            "text": "I care deeply about contributing to the well-being of people in my community.",
+            "tags": ["RIASEC", "S"]
+          },
+          {
+            "id": "S1Q20",
+            "text": "I am comfortable listening to others and offering thoughtful, empathetic advice.",
+            "tags": ["RIASEC", "S"]
+          },
+          {
+            "id": "S1Q21",
+            "text": "I enjoy taking initiative and motivating others to work toward a common goal.",
+            "tags": ["RIASEC", "E"]
+          },
+          {
+            "id": "S1Q22",
+            "text": "I find it natural to persuade others or present ideas confidently in group settings.",
+            "tags": ["RIASEC", "E"]
+          },
+          {
+            "id": "S1Q23",
+            "text": "I am drawn to business, entrepreneurship, or competitive environments.",
+            "tags": ["RIASEC", "E"]
+          },
+          {
+            "id": "S1Q24",
+            "text": "I like working with numbers, records, spreadsheets, or structured information.",
+            "tags": ["RIASEC", "C"]
+          },
+          {
+            "id": "S1Q25",
+            "text": "I prefer having clear instructions, defined processes, and measurable outcomes.",
+            "tags": ["RIASEC", "C"]
+          }
+        ]
+      },
+      {
+        "section_id": "S2",
+        "title": "Personality Traits",
+        "description": "These questions explore your general personality and how you tend to think, feel, and behave.",
+        "framework": "Big Five (OCEAN)",
+        "question_count": 15,
+        "scoring_guide": {
+          "O": "Openness – curiosity, creativity, intellectual interest",
+          "C": "Conscientiousness – discipline, organisation, goal-orientation",
+          "E": "Extraversion – sociability, assertiveness, energy from others",
+          "A": "Agreeableness – cooperation, empathy, trust",
+          "N": "Neuroticism – emotional sensitivity, stress reactivity (reverse-scored where noted)"
+        },
+        "questions": [
+          {
+            "id": "S2Q01",
+            "text": "I regularly seek out new experiences, ideas, or perspectives that challenge my thinking.",
+            "tags": ["Big5", "O"]
+          },
+          {
+            "id": "S2Q02",
+            "text": "I enjoy reflecting on abstract concepts and hypothetical scenarios.",
+            "tags": ["Big5", "O"]
+          },
+          {
+            "id": "S2Q03",
+            "text": "I tend to think creatively and approach problems from unconventional angles.",
+            "tags": ["Big5", "O"]
+          },
+          {
+            "id": "S2Q04",
+            "text": "I set clear goals for myself and consistently follow through on my commitments.",
+            "tags": ["Big5", "C"]
+          },
+          {
+            "id": "S2Q05",
+            "text": "I prefer to plan ahead rather than leave things to the last moment.",
+            "tags": ["Big5", "C"]
+          },
+          {
+            "id": "S2Q06",
+            "text": "I hold myself to high standards and feel uncomfortable submitting work I consider incomplete.",
+            "tags": ["Big5", "C"]
+          },
+          {
+            "id": "S2Q07",
+            "text": "I feel energised after spending time with a large group of people.",
+            "tags": ["Big5", "E"]
+          },
+          {
+            "id": "S2Q08",
+            "text": "I am comfortable speaking up and sharing my opinions in group discussions.",
+            "tags": ["Big5", "E"]
+          },
+          {
+            "id": "S2Q09",
+            "text": "I naturally take on leadership roles when working on group projects.",
+            "tags": ["Big5", "E"]
+          },
+          {
+            "id": "S2Q10",
+            "text": "I genuinely care about the feelings and needs of the people around me.",
+            "tags": ["Big5", "A"]
+          },
+          {
+            "id": "S2Q11",
+            "text": "I find it easy to forgive others and move past disagreements without holding grudges.",
+            "tags": ["Big5", "A"]
+          },
+          {
+            "id": "S2Q12",
+            "text": "I prefer finding compromise and common ground over winning an argument.",
+            "tags": ["Big5", "A"]
+          },
+          {
+            "id": "S2Q13",
+            "text": "I tend to stay calm and composed even when situations become stressful or uncertain.",
+            "tags": ["Big5", "N", "reverse_scored"]
+          },
+          {
+            "id": "S2Q14",
+            "text": "I recover quickly from setbacks and don't dwell on negative outcomes for long.",
+            "tags": ["Big5", "N", "reverse_scored"]
+          },
+          {
+            "id": "S2Q15",
+            "text": "I can separate my emotions from my decision-making when it matters most.",
+            "tags": ["Big5", "N", "reverse_scored"]
+          }
+        ]
+      },
+      {
+        "section_id": "S3",
+        "title": "Skills, Learning & Career Inclination",
+        "description": "These questions help identify your strengths, how you prefer to learn, and the kind of work you see yourself doing.",
+        "framework": "Multi-dimensional (Skills, Learning Style, Work Style, Subject Preference, Career Inclination)",
+        "question_count": 15,
+        "scoring_guide": {
+          "SKL": "Skills – self-assessed competency areas",
+          "LST": "Learning Style – preferred mode of acquiring knowledge",
+          "WST": "Work Style – preferred working environment and approach",
+          "SUB": "Subject Preference – academic domain affinity",
+          "CIN": "Career Inclination – expressed career direction"
+        },
+        "questions": [
+          {
+            "id": "S3Q01",
+            "text": "I am confident in my ability to communicate ideas clearly in writing or speech.",
+            "tags": ["SKL", "verbal_communication"]
+          },
+          {
+            "id": "S3Q02",
+            "text": "I find it easy to spot patterns, inconsistencies, or errors in data and information.",
+            "tags": ["SKL", "analytical_thinking"]
+          },
+          {
+            "id": "S3Q03",
+            "text": "I learn best by doing — trying things out rather than reading about them.",
+            "tags": ["LST", "kinesthetic"]
+          },
+          {
+            "id": "S3Q04",
+            "text": "I understand concepts better when they are explained through diagrams or visual aids.",
+            "tags": ["LST", "visual"]
+          },
+          {
+            "id": "S3Q05",
+            "text": "I retain information more effectively through discussion and collaborative learning.",
+            "tags": ["LST", "auditory_social"]
+          },
+          {
+            "id": "S3Q06",
+            "text": "I work best independently, where I can set my own pace without interruptions.",
+            "tags": ["WST", "independent"]
+          },
+          {
+            "id": "S3Q07",
+            "text": "I thrive in dynamic environments where tasks and challenges change frequently.",
+            "tags": ["WST", "adaptive"]
+          },
+          {
+            "id": "S3Q08",
+            "text": "I am more drawn to subjects in science and mathematics than the arts or humanities.",
+            "tags": ["SUB", "STEM_affinity"]
+          },
+          {
+            "id": "S3Q09",
+            "text": "I find topics related to human behaviour, society, and culture genuinely interesting.",
+            "tags": ["SUB", "social_sciences"]
+          },
+          {
+            "id": "S3Q10",
+            "text": "I am interested in pursuing a career that involves helping or supporting others directly.",
+            "tags": ["CIN", "helping_professions"]
+          },
+          {
+            "id": "S3Q11",
+            "text": "I can picture myself starting my own business or independent project someday.",
+            "tags": ["CIN", "entrepreneurship"]
+          },
+          {
+            "id": "S3Q12",
+            "text": "I am excited by the possibility of a career in technology, engineering, or innovation.",
+            "tags": ["CIN", "technology_engineering"]
+          },
+          {
+            "id": "S3Q13",
+            "text": "I would find it meaningful to work in a role that creates art, media, or cultural content.",
+            "tags": ["CIN", "creative_arts_media"]
+          },
+          {
+            "id": "S3Q14",
+            "text": "I am motivated by the idea of conducting research or contributing new knowledge to a field.",
+            "tags": ["CIN", "research_academia"]
+          },
+          {
+            "id": "S3Q15",
+            "text": "A career in management, policy, law, or leadership appeals to me.",
+            "tags": ["CIN", "leadership_policy"]
+          }
+        ]
+      }
+    ],
+    "scoring_instructions": {
+      "RIASEC": "Sum scores per tag (R, I, A, S, E, C) across Section 1. The top two or three codes form the student's Holland Code (e.g. SEC, RIC). Map codes to career clusters using a standard RIASEC career cluster table.",
+      "Big5": "Sum scores per trait (O, C, E, A). For N-tagged questions marked reverse_scored, compute: adjusted_score = 6 – raw_score before summing. Higher totals indicate stronger trait expression.",
+      "Section3": "Aggregate by tag group (SKL, LST, WST, SUB, CIN). The dominant tag within each group indicates the student's profile for that dimension.",
+      "overall_profile": "Combine RIASEC Holland Code + Big Five trait profile + Section 3 inclination tags to generate a holistic career recommendation narrative."
+    }
+  }
+}

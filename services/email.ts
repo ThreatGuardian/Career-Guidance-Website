@@ -1,9 +1,9 @@
 import emailjs from '@emailjs/browser';
 
-// EmailJS Credentials
-const EMAILJS_SERVICE_ID = 'service_g8zyevq';
-const EMAILJS_TEMPLATE_ID_REGISTRATION = 'template_3t7oi1o';
-const EMAILJS_PUBLIC_KEY = '9xz2Cudlad-sH32df';
+// EmailJS Credentials — reads from env vars with fallback
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_g8zyevq';
+const EMAILJS_TEMPLATE_ID_REGISTRATION = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_3t7oi1o';
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '9xz2Cudlad-sH32df';
 
 export const EmailService = {
   sendRegistrationConfirmation: async (data: {

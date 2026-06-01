@@ -2,12 +2,18 @@ import React from 'react';
 import SectionHeading from './SectionHeading';
 import { ResourceItem } from '../types';
 import { FileText, Download, File, Presentation } from 'lucide-react';
+import { useTranslation } from '../translations';
+import { useScrollReveal, getRevealClass } from '../hooks/useScrollReveal';
 
 interface DownloadsProps {
   resources: ResourceItem[];
 }
 
 const Downloads: React.FC<DownloadsProps> = ({ resources }) => {
+  const { t } = useTranslation();
+  const headingReveal = useScrollReveal();
+  const cardsReveal = useScrollReveal({ threshold: 0.05 });
+
   if (resources.length === 0) return null;
 
   const getFileIcon = (type: string) => {
@@ -19,20 +25,25 @@ const Downloads: React.FC<DownloadsProps> = ({ resources }) => {
   };
 
   return (
-    <section id="downloads" className="py-20 bg-white/50 backdrop-blur-sm">
-      <div className="container mx-auto px-4 md:px-6">
-        <SectionHeading 
-          title="References & Downloads" 
-          subtitle="Access presentations, brochures, and detailed guides."
-        />
+    <section id="downloads" className="py-12 md:py-16 bg-white/50 backdrop-blur-sm border-t border-gray-100">
+      <div className="max-w-7xl mx-auto px-8 md:px-16 lg:px-24">
+        <div ref={headingReveal.ref} className={getRevealClass(headingReveal.isVisible, 'up')}>
+          <SectionHeading 
+            title={t('downloads.title')} 
+            subtitle={t('downloads.subtitle')}
+          />
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-          {resources.map((res) => (
+        <div ref={cardsReveal.ref} className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          {resources.map((res, index) => (
             <div 
               key={res.id} 
-              className="border border-white/50 rounded-xl p-5 hover:border-brand-accent/30 hover:shadow-lg transition-all flex items-start gap-4 group bg-white/70 hover:bg-white backdrop-blur"
+              className={`border border-white/50 rounded-xl p-5 hover:border-brand-accent/30 hover:shadow-lg transition-all duration-500 flex items-start gap-4 group bg-white/70 hover:bg-white backdrop-blur active:scale-[0.99] ${
+                cardsReveal.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+              }`}
+              style={{ transitionDelay: `${index * 100}ms` }}
             >
-              <div className="bg-white p-3 rounded-lg shadow-sm group-hover:scale-110 transition-transform">
+              <div className="bg-white p-3 rounded-lg shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                 {getFileIcon(res.fileType)}
               </div>
               <div className="flex-1 min-w-0">
@@ -46,7 +57,7 @@ const Downloads: React.FC<DownloadsProps> = ({ resources }) => {
               <a 
                 href={res.downloadUrl} 
                 download
-                className="p-2 text-gray-400 hover:text-brand-accent hover:bg-blue-50 rounded-full transition-colors self-center"
+                className="p-2 text-gray-400 hover:text-brand-accent hover:bg-blue-50 rounded-full transition-all self-center hover:scale-110 active:scale-95"
                 title="Download File"
               >
                 <Download size={20} />

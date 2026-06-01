@@ -1,0 +1,1550 @@
+{
+  "metadata": {
+    "title": "Career Recommendation Database",
+    "version": "1.0",
+    "total_careers": 150,
+    "compatible_with": "Career Discovery Assessment v1.0",
+    "riasec_tags": ["R", "I", "A", "S", "E", "C"],
+    "big5_traits": ["O", "C", "E", "A", "N_low"],
+    "categories": [
+      "Technology", "Science", "Business", "Creative", "Government",
+      "Healthcare", "Social Service", "Emerging", "Vocational",
+      "Entrepreneurship", "Design", "Media", "Research", "Finance",
+      "Law", "Education", "Sports", "Environmental", "Engineering", "Other"
+    ]
+  },
+  "careers": [
+
+    {
+      "id": "C001",
+      "name": "Software Engineer",
+      "category": "Technology",
+      "description": "Designs, develops, and maintains software applications and systems across web, mobile, and enterprise platforms.",
+      "riasec": ["I", "R", "C"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["logical_thinking", "programming", "problem_solving", "attention_to_detail"],
+      "work_style": ["independent", "structured", "collaborative"]
+    },
+    {
+      "id": "C002",
+      "name": "Data Scientist",
+      "category": "Technology",
+      "description": "Extracts insights from large datasets using statistics, machine learning, and data visualisation to drive business decisions.",
+      "riasec": ["I", "C"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["analytical_thinking", "statistics", "programming", "data_visualisation"],
+      "work_style": ["independent", "structured"]
+    },
+    {
+      "id": "C003",
+      "name": "Cybersecurity Analyst",
+      "category": "Technology",
+      "description": "Protects computer systems and networks from digital threats by monitoring, detecting, and responding to security incidents.",
+      "riasec": ["I", "R", "C"],
+      "personality_traits": ["C", "N_low"],
+      "preferred_skills": ["analytical_thinking", "attention_to_detail", "problem_solving", "technical_knowledge"],
+      "work_style": ["independent", "structured", "adaptive"]
+    },
+    {
+      "id": "C004",
+      "name": "AI/ML Engineer",
+      "category": "Technology",
+      "description": "Builds and deploys artificial intelligence and machine learning models that power intelligent applications and automation.",
+      "riasec": ["I", "R"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["programming", "mathematics", "research", "problem_solving"],
+      "work_style": ["independent", "collaborative"]
+    },
+    {
+      "id": "C005",
+      "name": "Cloud Architect",
+      "category": "Technology",
+      "description": "Designs and oversees cloud computing strategies and infrastructure for organisations migrating to or operating in the cloud.",
+      "riasec": ["I", "R", "E"],
+      "personality_traits": ["C", "O"],
+      "preferred_skills": ["systems_thinking", "technical_knowledge", "communication", "problem_solving"],
+      "work_style": ["structured", "collaborative"]
+    },
+    {
+      "id": "C006",
+      "name": "DevOps Engineer",
+      "category": "Technology",
+      "description": "Bridges software development and IT operations, automating pipelines and ensuring continuous integration and delivery.",
+      "riasec": ["R", "I", "C"],
+      "personality_traits": ["C", "N_low"],
+      "preferred_skills": ["technical_knowledge", "automation", "problem_solving", "attention_to_detail"],
+      "work_style": ["structured", "adaptive"]
+    },
+    {
+      "id": "C007",
+      "name": "Full Stack Developer",
+      "category": "Technology",
+      "description": "Develops both client-side and server-side components of web applications, handling the full product development cycle.",
+      "riasec": ["I", "R", "A"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["programming", "problem_solving", "creativity", "attention_to_detail"],
+      "work_style": ["independent", "adaptive"]
+    },
+    {
+      "id": "C008",
+      "name": "Blockchain Developer",
+      "category": "Technology",
+      "description": "Creates decentralised applications and smart contracts using blockchain protocols such as Ethereum and Solana.",
+      "riasec": ["I", "R"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["programming", "cryptography", "systems_thinking", "problem_solving"],
+      "work_style": ["independent", "adaptive"]
+    },
+
+    {
+      "id": "C009",
+      "name": "Medical Doctor (Physician)",
+      "category": "Healthcare",
+      "description": "Diagnoses and treats illnesses, injuries, and medical conditions in clinical settings across various specialties.",
+      "riasec": ["I", "S"],
+      "personality_traits": ["C", "A", "N_low"],
+      "preferred_skills": ["analytical_thinking", "empathy", "communication", "attention_to_detail"],
+      "work_style": ["collaborative", "structured"]
+    },
+    {
+      "id": "C010",
+      "name": "Surgeon",
+      "category": "Healthcare",
+      "description": "Performs surgical procedures to treat injuries, diseases, and deformities requiring operative intervention.",
+      "riasec": ["I", "R"],
+      "personality_traits": ["C", "N_low"],
+      "preferred_skills": ["manual_dexterity", "attention_to_detail", "decision_making", "stamina"],
+      "work_style": ["structured", "high_precision"]
+    },
+    {
+      "id": "C011",
+      "name": "Nurse (Registered)",
+      "category": "Healthcare",
+      "description": "Provides direct patient care, administers treatments, and coordinates healthcare delivery in clinical environments.",
+      "riasec": ["S", "I"],
+      "personality_traits": ["A", "C", "N_low"],
+      "preferred_skills": ["empathy", "communication", "attention_to_detail", "clinical_skills"],
+      "work_style": ["collaborative", "structured"]
+    },
+    {
+      "id": "C012",
+      "name": "Pharmacist",
+      "category": "Healthcare",
+      "description": "Dispenses medications, advises patients on drug interactions, and ensures safe pharmaceutical practices.",
+      "riasec": ["I", "C", "S"],
+      "personality_traits": ["C", "A"],
+      "preferred_skills": ["analytical_thinking", "attention_to_detail", "communication", "chemistry_knowledge"],
+      "work_style": ["structured", "collaborative"]
+    },
+    {
+      "id": "C013",
+      "name": "Psychiatrist",
+      "category": "Healthcare",
+      "description": "Evaluates and treats mental health disorders through therapy, medication management, and patient-centred care.",
+      "riasec": ["I", "S"],
+      "personality_traits": ["A", "O", "N_low"],
+      "preferred_skills": ["empathy", "analytical_thinking", "communication", "active_listening"],
+      "work_style": ["collaborative", "structured"]
+    },
+    {
+      "id": "C014",
+      "name": "Biomedical Engineer",
+      "category": "Healthcare",
+      "description": "Develops medical devices, prosthetics, and diagnostic equipment by combining engineering principles with biological science.",
+      "riasec": ["I", "R"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["engineering", "biology_knowledge", "research", "problem_solving"],
+      "work_style": ["structured", "independent"]
+    },
+    {
+      "id": "C015",
+      "name": "Public Health Officer",
+      "category": "Healthcare",
+      "description": "Plans and implements programmes to prevent disease, promote health, and improve population-level health outcomes.",
+      "riasec": ["S", "I", "E"],
+      "personality_traits": ["A", "C"],
+      "preferred_skills": ["research", "communication", "analytical_thinking", "policy_knowledge"],
+      "work_style": ["collaborative", "structured"]
+    },
+
+    {
+      "id": "C016",
+      "name": "Research Scientist",
+      "category": "Science",
+      "description": "Conducts original scientific investigations to expand knowledge, test hypotheses, and publish findings in academic journals.",
+      "riasec": ["I"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["research", "analytical_thinking", "scientific_writing", "critical_thinking"],
+      "work_style": ["independent", "structured"]
+    },
+    {
+      "id": "C017",
+      "name": "Astrophysicist",
+      "category": "Science",
+      "description": "Studies the physical properties and origins of celestial objects, including stars, galaxies, and black holes.",
+      "riasec": ["I"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["mathematics", "physics_knowledge", "research", "critical_thinking"],
+      "work_style": ["independent", "structured"]
+    },
+    {
+      "id": "C018",
+      "name": "Marine Biologist",
+      "category": "Science",
+      "description": "Investigates oceanic ecosystems, marine organisms, and the impact of human activity on aquatic environments.",
+      "riasec": ["I", "R"],
+      "personality_traits": ["O", "A"],
+      "preferred_skills": ["research", "biology_knowledge", "fieldwork", "scientific_writing"],
+      "work_style": ["independent", "adaptive"]
+    },
+    {
+      "id": "C019",
+      "name": "Chemist",
+      "category": "Science",
+      "description": "Investigates the composition, structure, and properties of matter to develop new materials, drugs, and industrial processes.",
+      "riasec": ["I", "R"],
+      "personality_traits": ["C", "O"],
+      "preferred_skills": ["analytical_thinking", "laboratory_skills", "chemistry_knowledge", "attention_to_detail"],
+      "work_style": ["structured", "independent"]
+    },
+    {
+      "id": "C020",
+      "name": "Geologist",
+      "category": "Science",
+      "description": "Studies the Earth's structure, composition, and processes to understand its history and locate natural resources.",
+      "riasec": ["I", "R"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["fieldwork", "analytical_thinking", "research", "spatial_reasoning"],
+      "work_style": ["adaptive", "independent"]
+    },
+    {
+      "id": "C021",
+      "name": "Neuroscientist",
+      "category": "Science",
+      "description": "Researches the structure and function of the nervous system to understand behaviour, cognition, and neurological disorders.",
+      "riasec": ["I"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["research", "analytical_thinking", "biology_knowledge", "critical_thinking"],
+      "work_style": ["independent", "structured"]
+    },
+
+    {
+      "id": "C022",
+      "name": "Investment Banker",
+      "category": "Finance",
+      "description": "Advises corporations on mergers, acquisitions, and capital raising, managing complex financial transactions.",
+      "riasec": ["E", "C", "I"],
+      "personality_traits": ["C", "E", "N_low"],
+      "preferred_skills": ["analytical_thinking", "financial_modelling", "communication", "decision_making"],
+      "work_style": ["high_pressure", "collaborative"]
+    },
+    {
+      "id": "C023",
+      "name": "Financial Analyst",
+      "category": "Finance",
+      "description": "Evaluates financial data and market trends to guide investment decisions and organisational strategy.",
+      "riasec": ["C", "I"],
+      "personality_traits": ["C", "O"],
+      "preferred_skills": ["analytical_thinking", "financial_modelling", "attention_to_detail", "communication"],
+      "work_style": ["structured", "independent"]
+    },
+    {
+      "id": "C024",
+      "name": "Chartered Accountant",
+      "category": "Finance",
+      "description": "Manages financial records, tax compliance, and auditing for individuals and organisations.",
+      "riasec": ["C", "I"],
+      "personality_traits": ["C"],
+      "preferred_skills": ["attention_to_detail", "numerical_reasoning", "analytical_thinking", "ethics"],
+      "work_style": ["structured", "independent"]
+    },
+    {
+      "id": "C025",
+      "name": "Actuary",
+      "category": "Finance",
+      "description": "Uses mathematics and statistics to assess financial risk and uncertainty for insurance and pension sectors.",
+      "riasec": ["C", "I"],
+      "personality_traits": ["C", "O"],
+      "preferred_skills": ["mathematics", "analytical_thinking", "statistics", "attention_to_detail"],
+      "work_style": ["structured", "independent"]
+    },
+    {
+      "id": "C026",
+      "name": "Quantitative Analyst (Quant)",
+      "category": "Finance",
+      "description": "Develops mathematical models and algorithms to price financial instruments and manage risk in trading environments.",
+      "riasec": ["I", "C"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["mathematics", "programming", "statistics", "analytical_thinking"],
+      "work_style": ["independent", "structured"]
+    },
+    {
+      "id": "C027",
+      "name": "Personal Financial Advisor",
+      "category": "Finance",
+      "description": "Guides individuals in managing savings, investments, insurance, and retirement planning to achieve financial goals.",
+      "riasec": ["E", "S", "C"],
+      "personality_traits": ["A", "E"],
+      "preferred_skills": ["communication", "financial_knowledge", "empathy", "analytical_thinking"],
+      "work_style": ["collaborative", "adaptive"]
+    },
+
+    {
+      "id": "C028",
+      "name": "Advocate / Lawyer",
+      "category": "Law",
+      "description": "Represents clients in legal proceedings, drafts legal documents, and provides counsel on matters of law.",
+      "riasec": ["E", "I", "S"],
+      "personality_traits": ["O", "C", "E"],
+      "preferred_skills": ["verbal_communication", "critical_thinking", "research", "argumentation"],
+      "work_style": ["structured", "collaborative"]
+    },
+    {
+      "id": "C029",
+      "name": "Corporate Lawyer",
+      "category": "Law",
+      "description": "Advises businesses on legal matters such as contracts, mergers, intellectual property, and regulatory compliance.",
+      "riasec": ["E", "C", "I"],
+      "personality_traits": ["C", "E"],
+      "preferred_skills": ["analytical_thinking", "communication", "attention_to_detail", "negotiation"],
+      "work_style": ["structured", "collaborative"]
+    },
+    {
+      "id": "C030",
+      "name": "Judge",
+      "category": "Law",
+      "description": "Presides over court proceedings, interprets the law, weighs evidence, and delivers judgments in legal disputes.",
+      "riasec": ["I", "E", "C"],
+      "personality_traits": ["C", "N_low", "O"],
+      "preferred_skills": ["critical_thinking", "ethics", "decision_making", "communication"],
+      "work_style": ["structured", "independent"]
+    },
+    {
+      "id": "C031",
+      "name": "Public Prosecutor",
+      "category": "Law",
+      "description": "Represents the state in criminal proceedings, marshalling evidence and arguing cases against accused individuals.",
+      "riasec": ["E", "I"],
+      "personality_traits": ["E", "C"],
+      "preferred_skills": ["verbal_communication", "research", "argumentation", "ethics"],
+      "work_style": ["structured", "collaborative"]
+    },
+    {
+      "id": "C032",
+      "name": "Legal Researcher",
+      "category": "Law",
+      "description": "Conducts in-depth analysis of case law, statutes, and legal precedents to support legal arguments and policy.",
+      "riasec": ["I", "C"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["research", "analytical_thinking", "writing", "attention_to_detail"],
+      "work_style": ["independent", "structured"]
+    },
+
+    {
+      "id": "C033",
+      "name": "School Teacher",
+      "category": "Education",
+      "description": "Educates students in academic subjects, fostering intellectual development, critical thinking, and personal growth.",
+      "riasec": ["S", "A"],
+      "personality_traits": ["A", "E", "C"],
+      "preferred_skills": ["communication", "empathy", "curriculum_design", "patience"],
+      "work_style": ["collaborative", "structured"]
+    },
+    {
+      "id": "C034",
+      "name": "University Professor",
+      "category": "Education",
+      "description": "Teaches undergraduate and postgraduate students, conducts research, and contributes to knowledge in a specialist field.",
+      "riasec": ["I", "S", "A"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["research", "communication", "critical_thinking", "scientific_writing"],
+      "work_style": ["independent", "collaborative"]
+    },
+    {
+      "id": "C035",
+      "name": "Special Education Teacher",
+      "category": "Education",
+      "description": "Supports students with learning differences, disabilities, or developmental needs through adapted teaching methods.",
+      "riasec": ["S"],
+      "personality_traits": ["A", "C", "N_low"],
+      "preferred_skills": ["empathy", "patience", "communication", "adaptive_teaching"],
+      "work_style": ["collaborative", "structured"]
+    },
+    {
+      "id": "C036",
+      "name": "Education Technology Specialist",
+      "category": "Education",
+      "description": "Integrates digital tools and platforms into educational environments to enhance teaching and learning outcomes.",
+      "riasec": ["S", "I", "C"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["technical_knowledge", "curriculum_design", "communication", "analytical_thinking"],
+      "work_style": ["collaborative", "adaptive"]
+    },
+    {
+      "id": "C037",
+      "name": "Career Counsellor",
+      "category": "Education",
+      "description": "Guides students and professionals in understanding their strengths, interests, and pathways toward fulfilling careers.",
+      "riasec": ["S", "E"],
+      "personality_traits": ["A", "O"],
+      "preferred_skills": ["empathy", "communication", "analytical_thinking", "active_listening"],
+      "work_style": ["collaborative", "adaptive"]
+    },
+
+    {
+      "id": "C038",
+      "name": "Graphic Designer",
+      "category": "Design",
+      "description": "Creates visual communications — logos, layouts, illustrations — that convey ideas and messages effectively.",
+      "riasec": ["A", "R"],
+      "personality_traits": ["O"],
+      "preferred_skills": ["creativity", "visual_communication", "software_proficiency", "attention_to_detail"],
+      "work_style": ["independent", "adaptive"]
+    },
+    {
+      "id": "C039",
+      "name": "UX/UI Designer",
+      "category": "Design",
+      "description": "Designs intuitive and engaging user experiences for digital products, balancing aesthetics with usability.",
+      "riasec": ["A", "I", "S"],
+      "personality_traits": ["O", "A"],
+      "preferred_skills": ["empathy", "creativity", "prototyping", "analytical_thinking"],
+      "work_style": ["collaborative", "adaptive"]
+    },
+    {
+      "id": "C040",
+      "name": "Architect",
+      "category": "Design",
+      "description": "Plans and designs buildings and spaces, integrating structural integrity with aesthetic and functional requirements.",
+      "riasec": ["A", "R", "I"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["creativity", "spatial_reasoning", "technical_drawing", "project_management"],
+      "work_style": ["collaborative", "structured"]
+    },
+    {
+      "id": "C041",
+      "name": "Interior Designer",
+      "category": "Design",
+      "description": "Creates functional and aesthetically pleasing interior spaces for residential, commercial, and institutional clients.",
+      "riasec": ["A", "E"],
+      "personality_traits": ["O", "E"],
+      "preferred_skills": ["creativity", "spatial_reasoning", "client_management", "attention_to_detail"],
+      "work_style": ["collaborative", "adaptive"]
+    },
+    {
+      "id": "C042",
+      "name": "Fashion Designer",
+      "category": "Design",
+      "description": "Conceptualises and creates clothing and accessories, combining artistic vision with commercial awareness.",
+      "riasec": ["A", "E"],
+      "personality_traits": ["O", "E"],
+      "preferred_skills": ["creativity", "trend_awareness", "manual_dexterity", "visual_communication"],
+      "work_style": ["independent", "adaptive"]
+    },
+    {
+      "id": "C043",
+      "name": "Industrial Designer",
+      "category": "Design",
+      "description": "Designs consumer products by combining form, function, and manufacturing feasibility to improve everyday life.",
+      "riasec": ["A", "R", "I"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["creativity", "engineering", "prototyping", "spatial_reasoning"],
+      "work_style": ["collaborative", "structured"]
+    },
+    {
+      "id": "C044",
+      "name": "Motion Graphics Designer",
+      "category": "Design",
+      "description": "Creates animated visual content for film, television, advertising, and digital media using design and animation software.",
+      "riasec": ["A", "R"],
+      "personality_traits": ["O"],
+      "preferred_skills": ["creativity", "animation", "software_proficiency", "storytelling"],
+      "work_style": ["independent", "adaptive"]
+    },
+
+    {
+      "id": "C045",
+      "name": "Journalist",
+      "category": "Media",
+      "description": "Investigates and reports on news and current affairs for print, broadcast, or digital media platforms.",
+      "riasec": ["A", "S", "E"],
+      "personality_traits": ["O", "E"],
+      "preferred_skills": ["writing", "research", "communication", "critical_thinking"],
+      "work_style": ["adaptive", "independent"]
+    },
+    {
+      "id": "C046",
+      "name": "Film Director",
+      "category": "Media",
+      "description": "Leads the creative vision and execution of film and television productions, guiding cast and crew.",
+      "riasec": ["A", "E"],
+      "personality_traits": ["O", "E"],
+      "preferred_skills": ["storytelling", "leadership", "creativity", "communication"],
+      "work_style": ["collaborative", "high_pressure"]
+    },
+    {
+      "id": "C047",
+      "name": "Content Creator / YouTuber",
+      "category": "Media",
+      "description": "Produces original video, audio, or written content for online platforms, building and engaging audiences.",
+      "riasec": ["A", "E"],
+      "personality_traits": ["O", "E"],
+      "preferred_skills": ["creativity", "communication", "editing", "audience_building"],
+      "work_style": ["independent", "adaptive"]
+    },
+    {
+      "id": "C048",
+      "name": "Podcast Producer",
+      "category": "Media",
+      "description": "Plans, records, edits, and distributes audio content on topics ranging from news and culture to niche interests.",
+      "riasec": ["A", "E", "S"],
+      "personality_traits": ["O", "E"],
+      "preferred_skills": ["audio_editing", "storytelling", "communication", "project_management"],
+      "work_style": ["independent", "collaborative"]
+    },
+    {
+      "id": "C049",
+      "name": "Public Relations Specialist",
+      "category": "Media",
+      "description": "Manages the public image of organisations or individuals through strategic communication and media relations.",
+      "riasec": ["E", "A", "S"],
+      "personality_traits": ["E", "A"],
+      "preferred_skills": ["communication", "writing", "networking", "strategic_thinking"],
+      "work_style": ["collaborative", "adaptive"]
+    },
+    {
+      "id": "C050",
+      "name": "Photojournalist",
+      "category": "Media",
+      "description": "Captures news events and human stories through photography, combining visual artistry with journalistic rigour.",
+      "riasec": ["A", "S", "R"],
+      "personality_traits": ["O", "N_low"],
+      "preferred_skills": ["photography", "storytelling", "fieldwork", "attention_to_detail"],
+      "work_style": ["independent", "adaptive"]
+    },
+
+    {
+      "id": "C051",
+      "name": "Marketing Manager",
+      "category": "Business",
+      "description": "Develops and executes marketing strategies to promote products, grow brand awareness, and drive revenue.",
+      "riasec": ["E", "A", "S"],
+      "personality_traits": ["E", "O"],
+      "preferred_skills": ["strategic_thinking", "communication", "creativity", "data_analysis"],
+      "work_style": ["collaborative", "adaptive"]
+    },
+    {
+      "id": "C052",
+      "name": "Management Consultant",
+      "category": "Business",
+      "description": "Helps organisations improve performance by diagnosing problems, identifying solutions, and managing change.",
+      "riasec": ["E", "I", "C"],
+      "personality_traits": ["O", "C", "E"],
+      "preferred_skills": ["analytical_thinking", "communication", "problem_solving", "strategic_thinking"],
+      "work_style": ["collaborative", "high_pressure"]
+    },
+    {
+      "id": "C053",
+      "name": "Human Resources Manager",
+      "category": "Business",
+      "description": "Oversees recruitment, employee relations, performance management, and organisational culture.",
+      "riasec": ["S", "E", "C"],
+      "personality_traits": ["A", "E", "C"],
+      "preferred_skills": ["communication", "empathy", "negotiation", "organisational_skills"],
+      "work_style": ["collaborative", "structured"]
+    },
+    {
+      "id": "C054",
+      "name": "Operations Manager",
+      "category": "Business",
+      "description": "Oversees day-to-day business operations, optimising processes, resources, and productivity across departments.",
+      "riasec": ["E", "C", "R"],
+      "personality_traits": ["C", "E"],
+      "preferred_skills": ["project_management", "analytical_thinking", "leadership", "problem_solving"],
+      "work_style": ["structured", "collaborative"]
+    },
+    {
+      "id": "C055",
+      "name": "Supply Chain Analyst",
+      "category": "Business",
+      "description": "Monitors and optimises the flow of goods, data, and resources from suppliers to end customers.",
+      "riasec": ["C", "I", "E"],
+      "personality_traits": ["C", "O"],
+      "preferred_skills": ["analytical_thinking", "logistics_knowledge", "problem_solving", "attention_to_detail"],
+      "work_style": ["structured", "collaborative"]
+    },
+    {
+      "id": "C056",
+      "name": "Product Manager",
+      "category": "Business",
+      "description": "Leads the development and lifecycle of a product, aligning engineering, design, and business teams around a shared roadmap.",
+      "riasec": ["E", "I", "S"],
+      "personality_traits": ["O", "E", "C"],
+      "preferred_skills": ["strategic_thinking", "communication", "analytical_thinking", "leadership"],
+      "work_style": ["collaborative", "adaptive"]
+    },
+
+    {
+      "id": "C057",
+      "name": "Entrepreneur / Startup Founder",
+      "category": "Entrepreneurship",
+      "description": "Identifies market opportunities, builds ventures from the ground up, and leads teams toward commercial success.",
+      "riasec": ["E", "I", "A"],
+      "personality_traits": ["O", "E", "N_low"],
+      "preferred_skills": ["leadership", "strategic_thinking", "risk_taking", "communication"],
+      "work_style": ["adaptive", "high_pressure"]
+    },
+    {
+      "id": "C058",
+      "name": "Social Entrepreneur",
+      "category": "Entrepreneurship",
+      "description": "Creates ventures that address social or environmental problems while maintaining financial sustainability.",
+      "riasec": ["E", "S", "A"],
+      "personality_traits": ["O", "A", "E"],
+      "preferred_skills": ["leadership", "empathy", "strategic_thinking", "communication"],
+      "work_style": ["adaptive", "collaborative"]
+    },
+    {
+      "id": "C059",
+      "name": "Franchise Owner",
+      "category": "Entrepreneurship",
+      "description": "Operates a licensed business under an established brand, managing local operations within a defined framework.",
+      "riasec": ["E", "C"],
+      "personality_traits": ["C", "E"],
+      "preferred_skills": ["management", "customer_service", "financial_literacy", "leadership"],
+      "work_style": ["structured", "adaptive"]
+    },
+    {
+      "id": "C060",
+      "name": "E-commerce Entrepreneur",
+      "category": "Entrepreneurship",
+      "description": "Builds and scales an online retail business, managing product sourcing, marketing, and customer experience.",
+      "riasec": ["E", "C", "A"],
+      "personality_traits": ["O", "E"],
+      "preferred_skills": ["digital_marketing", "analytics", "customer_service", "strategic_thinking"],
+      "work_style": ["independent", "adaptive"]
+    },
+
+    {
+      "id": "C061",
+      "name": "IAS / Civil Service Officer",
+      "category": "Government",
+      "description": "Administers public policy and governance at national or state level, overseeing implementation of government programmes.",
+      "riasec": ["S", "E", "C"],
+      "personality_traits": ["C", "A", "E"],
+      "preferred_skills": ["policy_knowledge", "communication", "decision_making", "leadership"],
+      "work_style": ["structured", "collaborative"]
+    },
+    {
+      "id": "C062",
+      "name": "Diplomat / Foreign Service Officer",
+      "category": "Government",
+      "description": "Represents a country's interests abroad, negotiating treaties, building alliances, and managing bilateral relations.",
+      "riasec": ["E", "S", "I"],
+      "personality_traits": ["E", "A", "O"],
+      "preferred_skills": ["communication", "negotiation", "cultural_awareness", "analytical_thinking"],
+      "work_style": ["collaborative", "adaptive"]
+    },
+    {
+      "id": "C063",
+      "name": "Intelligence Analyst",
+      "category": "Government",
+      "description": "Gathers and interprets information from diverse sources to assess national security threats and inform strategic decisions.",
+      "riasec": ["I", "C"],
+      "personality_traits": ["C", "O", "N_low"],
+      "preferred_skills": ["analytical_thinking", "research", "critical_thinking", "attention_to_detail"],
+      "work_style": ["structured", "independent"]
+    },
+    {
+      "id": "C064",
+      "name": "Urban Planner",
+      "category": "Government",
+      "description": "Designs and manages land use, infrastructure, and community development plans for cities and regions.",
+      "riasec": ["I", "S", "A"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["spatial_reasoning", "analytical_thinking", "communication", "policy_knowledge"],
+      "work_style": ["collaborative", "structured"]
+    },
+    {
+      "id": "C065",
+      "name": "Military Officer",
+      "category": "Government",
+      "description": "Leads and manages personnel in defence operations, strategy, logistics, and national security missions.",
+      "riasec": ["E", "R", "S"],
+      "personality_traits": ["C", "E", "N_low"],
+      "preferred_skills": ["leadership", "decision_making", "physical_fitness", "strategic_thinking"],
+      "work_style": ["structured", "high_pressure"]
+    },
+
+    {
+      "id": "C066",
+      "name": "Social Worker",
+      "category": "Social Service",
+      "description": "Supports vulnerable individuals and families by connecting them with resources, counselling, and protective services.",
+      "riasec": ["S"],
+      "personality_traits": ["A", "C"],
+      "preferred_skills": ["empathy", "communication", "problem_solving", "case_management"],
+      "work_style": ["collaborative", "adaptive"]
+    },
+    {
+      "id": "C067",
+      "name": "Psychologist",
+      "category": "Social Service",
+      "description": "Assesses and treats behavioural and mental health conditions through evidence-based psychological therapies.",
+      "riasec": ["S", "I"],
+      "personality_traits": ["A", "O"],
+      "preferred_skills": ["empathy", "analytical_thinking", "active_listening", "research"],
+      "work_style": ["collaborative", "structured"]
+    },
+    {
+      "id": "C068",
+      "name": "Community Development Officer",
+      "category": "Social Service",
+      "description": "Designs and implements grassroots initiatives that improve social cohesion, civic participation, and local welfare.",
+      "riasec": ["S", "E"],
+      "personality_traits": ["A", "E"],
+      "preferred_skills": ["communication", "project_management", "empathy", "leadership"],
+      "work_style": ["collaborative", "adaptive"]
+    },
+    {
+      "id": "C069",
+      "name": "Non-Profit Manager",
+      "category": "Social Service",
+      "description": "Leads the operations, fundraising, and strategic direction of organisations working for a social mission.",
+      "riasec": ["S", "E", "C"],
+      "personality_traits": ["A", "E", "C"],
+      "preferred_skills": ["leadership", "communication", "fundraising", "project_management"],
+      "work_style": ["collaborative", "structured"]
+    },
+    {
+      "id": "C070",
+      "name": "School Counsellor",
+      "category": "Social Service",
+      "description": "Provides academic, social, and emotional support to students navigating challenges in educational settings.",
+      "riasec": ["S"],
+      "personality_traits": ["A", "N_low"],
+      "preferred_skills": ["empathy", "active_listening", "communication", "crisis_support"],
+      "work_style": ["collaborative", "structured"]
+    },
+
+    {
+      "id": "C071",
+      "name": "Environmental Scientist",
+      "category": "Environmental",
+      "description": "Investigates environmental problems and develops solutions for issues such as pollution, climate change, and conservation.",
+      "riasec": ["I", "R"],
+      "personality_traits": ["O", "A"],
+      "preferred_skills": ["research", "fieldwork", "analytical_thinking", "scientific_writing"],
+      "work_style": ["independent", "adaptive"]
+    },
+    {
+      "id": "C072",
+      "name": "Climate Policy Analyst",
+      "category": "Environmental",
+      "description": "Researches and develops policy frameworks to mitigate climate change and facilitate transition to sustainable systems.",
+      "riasec": ["I", "E", "S"],
+      "personality_traits": ["O", "A"],
+      "preferred_skills": ["policy_knowledge", "research", "analytical_thinking", "communication"],
+      "work_style": ["structured", "collaborative"]
+    },
+    {
+      "id": "C073",
+      "name": "Sustainability Consultant",
+      "category": "Environmental",
+      "description": "Advises businesses and governments on integrating sustainable practices into operations, supply chains, and reporting.",
+      "riasec": ["I", "E", "S"],
+      "personality_traits": ["O", "E"],
+      "preferred_skills": ["analytical_thinking", "communication", "strategic_thinking", "environmental_knowledge"],
+      "work_style": ["collaborative", "adaptive"]
+    },
+    {
+      "id": "C074",
+      "name": "Wildlife Biologist",
+      "category": "Environmental",
+      "description": "Studies animal populations and behaviour in natural habitats to support conservation and biodiversity management.",
+      "riasec": ["I", "R"],
+      "personality_traits": ["O", "A"],
+      "preferred_skills": ["fieldwork", "biology_knowledge", "research", "data_collection"],
+      "work_style": ["independent", "adaptive"]
+    },
+    {
+      "id": "C075",
+      "name": "Renewable Energy Engineer",
+      "category": "Environmental",
+      "description": "Designs and develops solar, wind, and other clean energy systems to reduce dependence on fossil fuels.",
+      "riasec": ["R", "I"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["engineering", "analytical_thinking", "technical_knowledge", "problem_solving"],
+      "work_style": ["structured", "collaborative"]
+    },
+
+    {
+      "id": "C076",
+      "name": "Mechanical Engineer",
+      "category": "Engineering",
+      "description": "Designs, builds, and tests mechanical systems and devices ranging from engines to manufacturing equipment.",
+      "riasec": ["R", "I"],
+      "personality_traits": ["C", "O"],
+      "preferred_skills": ["engineering", "technical_drawing", "problem_solving", "analytical_thinking"],
+      "work_style": ["structured", "collaborative"]
+    },
+    {
+      "id": "C077",
+      "name": "Civil Engineer",
+      "category": "Engineering",
+      "description": "Plans and oversees the design and construction of infrastructure such as roads, bridges, dams, and buildings.",
+      "riasec": ["R", "I", "C"],
+      "personality_traits": ["C", "N_low"],
+      "preferred_skills": ["engineering", "project_management", "spatial_reasoning", "analytical_thinking"],
+      "work_style": ["structured", "collaborative"]
+    },
+    {
+      "id": "C078",
+      "name": "Electrical Engineer",
+      "category": "Engineering",
+      "description": "Develops electrical systems and components including power generation, distribution networks, and electronic devices.",
+      "riasec": ["R", "I"],
+      "personality_traits": ["C", "O"],
+      "preferred_skills": ["technical_knowledge", "problem_solving", "analytical_thinking", "attention_to_detail"],
+      "work_style": ["structured", "independent"]
+    },
+    {
+      "id": "C079",
+      "name": "Aerospace Engineer",
+      "category": "Engineering",
+      "description": "Designs and tests aircraft, spacecraft, and propulsion systems for aviation and space exploration applications.",
+      "riasec": ["R", "I"],
+      "personality_traits": ["C", "O"],
+      "preferred_skills": ["engineering", "mathematics", "problem_solving", "attention_to_detail"],
+      "work_style": ["structured", "collaborative"]
+    },
+    {
+      "id": "C080",
+      "name": "Robotics Engineer",
+      "category": "Engineering",
+      "description": "Designs, builds, and programmes robotic systems for applications in manufacturing, healthcare, and exploration.",
+      "riasec": ["R", "I"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["engineering", "programming", "problem_solving", "creativity"],
+      "work_style": ["structured", "collaborative"]
+    },
+
+    {
+      "id": "C081",
+      "name": "Professional Athlete",
+      "category": "Sports",
+      "description": "Competes at the elite level in a chosen sport, training rigorously to perform at national or international competitions.",
+      "riasec": ["R", "E"],
+      "personality_traits": ["C", "E", "N_low"],
+      "preferred_skills": ["physical_fitness", "discipline", "teamwork", "mental_toughness"],
+      "work_style": ["structured", "high_pressure"]
+    },
+    {
+      "id": "C082",
+      "name": "Sports Coach",
+      "category": "Sports",
+      "description": "Trains and develops athletes' technical skills, physical conditioning, and mental performance.",
+      "riasec": ["S", "E", "R"],
+      "personality_traits": ["E", "A"],
+      "preferred_skills": ["leadership", "communication", "sports_knowledge", "empathy"],
+      "work_style": ["collaborative", "structured"]
+    },
+    {
+      "id": "C083",
+      "name": "Sports Analyst",
+      "category": "Sports",
+      "description": "Uses data and statistics to evaluate athlete performance, opponent strategies, and match outcomes.",
+      "riasec": ["I", "C", "R"],
+      "personality_traits": ["C", "O"],
+      "preferred_skills": ["data_analysis", "sports_knowledge", "attention_to_detail", "communication"],
+      "work_style": ["independent", "structured"]
+    },
+    {
+      "id": "C084",
+      "name": "Sports Physiotherapist",
+      "category": "Sports",
+      "description": "Assesses and rehabilitates sports injuries, helping athletes return to peak physical condition safely.",
+      "riasec": ["S", "R", "I"],
+      "personality_traits": ["A", "C"],
+      "preferred_skills": ["clinical_skills", "empathy", "anatomy_knowledge", "problem_solving"],
+      "work_style": ["collaborative", "structured"]
+    },
+    {
+      "id": "C085",
+      "name": "Sports Journalist",
+      "category": "Sports",
+      "description": "Reports on sporting events, profiles athletes, and analyses developments across the world of sport.",
+      "riasec": ["A", "E", "S"],
+      "personality_traits": ["E", "O"],
+      "preferred_skills": ["writing", "sports_knowledge", "communication", "research"],
+      "work_style": ["adaptive", "independent"]
+    },
+
+    {
+      "id": "C086",
+      "name": "Electrician",
+      "category": "Vocational",
+      "description": "Installs, maintains, and repairs electrical wiring, systems, and equipment in residential and commercial properties.",
+      "riasec": ["R", "C"],
+      "personality_traits": ["C"],
+      "preferred_skills": ["technical_knowledge", "manual_dexterity", "problem_solving", "attention_to_detail"],
+      "work_style": ["independent", "structured"]
+    },
+    {
+      "id": "C087",
+      "name": "Plumber",
+      "category": "Vocational",
+      "description": "Installs and maintains water, drainage, and gas systems in buildings, ensuring compliance with safety standards.",
+      "riasec": ["R", "C"],
+      "personality_traits": ["C"],
+      "preferred_skills": ["technical_knowledge", "manual_dexterity", "problem_solving", "physical_fitness"],
+      "work_style": ["independent", "adaptive"]
+    },
+    {
+      "id": "C088",
+      "name": "Automotive Technician",
+      "category": "Vocational",
+      "description": "Diagnoses, repairs, and maintains vehicles, using specialised tools and computer diagnostics.",
+      "riasec": ["R", "I"],
+      "personality_traits": ["C"],
+      "preferred_skills": ["technical_knowledge", "manual_dexterity", "problem_solving", "attention_to_detail"],
+      "work_style": ["independent", "structured"]
+    },
+    {
+      "id": "C089",
+      "name": "Chef / Culinary Professional",
+      "category": "Vocational",
+      "description": "Prepares and presents food in professional kitchen environments, from casual dining to fine cuisine.",
+      "riasec": ["R", "A"],
+      "personality_traits": ["O", "N_low"],
+      "preferred_skills": ["creativity", "manual_dexterity", "time_management", "attention_to_detail"],
+      "work_style": ["structured", "high_pressure"]
+    },
+    {
+      "id": "C090",
+      "name": "CNC Machine Operator",
+      "category": "Vocational",
+      "description": "Operates computer-controlled machinery to produce precision parts for manufacturing and engineering industries.",
+      "riasec": ["R", "C"],
+      "personality_traits": ["C"],
+      "preferred_skills": ["technical_knowledge", "attention_to_detail", "manual_dexterity", "programming"],
+      "work_style": ["structured", "independent"]
+    },
+
+    {
+      "id": "C091",
+      "name": "AI Ethics Researcher",
+      "category": "Emerging",
+      "description": "Investigates the moral, social, and governance implications of artificial intelligence systems and their deployment.",
+      "riasec": ["I", "S", "A"],
+      "personality_traits": ["O", "A"],
+      "preferred_skills": ["critical_thinking", "research", "writing", "ethics"],
+      "work_style": ["independent", "collaborative"]
+    },
+    {
+      "id": "C092",
+      "name": "XR (AR/VR) Developer",
+      "category": "Emerging",
+      "description": "Creates immersive extended reality experiences for gaming, education, healthcare, and enterprise applications.",
+      "riasec": ["A", "I", "R"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["programming", "creativity", "3D_modelling", "problem_solving"],
+      "work_style": ["independent", "collaborative"]
+    },
+    {
+      "id": "C093",
+      "name": "Genomics Data Analyst",
+      "category": "Emerging",
+      "description": "Analyses large-scale genetic datasets to identify patterns linked to disease, ancestry, and biological functions.",
+      "riasec": ["I", "C"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["bioinformatics", "statistics", "programming", "research"],
+      "work_style": ["independent", "structured"]
+    },
+    {
+      "id": "C094",
+      "name": "Space Technology Analyst",
+      "category": "Emerging",
+      "description": "Evaluates commercial and government space missions, satellite applications, and the growing new-space economy.",
+      "riasec": ["I", "E"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["analytical_thinking", "aerospace_knowledge", "research", "strategic_thinking"],
+      "work_style": ["independent", "structured"]
+    },
+    {
+      "id": "C095",
+      "name": "Digital Health Specialist",
+      "category": "Emerging",
+      "description": "Develops and implements technology-driven healthcare solutions such as telehealth platforms and health AI tools.",
+      "riasec": ["I", "S", "C"],
+      "personality_traits": ["O", "A"],
+      "preferred_skills": ["healthcare_knowledge", "technical_knowledge", "communication", "analytical_thinking"],
+      "work_style": ["collaborative", "adaptive"]
+    },
+    {
+      "id": "C096",
+      "name": "NFT / Digital Asset Strategist",
+      "category": "Emerging",
+      "description": "Advises creators and institutions on digital asset strategy, web3 ecosystems, and blockchain-based ownership models.",
+      "riasec": ["E", "A", "I"],
+      "personality_traits": ["O", "E"],
+      "preferred_skills": ["strategic_thinking", "blockchain_knowledge", "creativity", "communication"],
+      "work_style": ["adaptive", "independent"]
+    },
+    {
+      "id": "C097",
+      "name": "Prompt Engineer",
+      "category": "Emerging",
+      "description": "Designs and optimises instructions for large language models to produce accurate, useful, and safe AI outputs.",
+      "riasec": ["I", "A", "C"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["analytical_thinking", "writing", "critical_thinking", "AI_knowledge"],
+      "work_style": ["independent", "adaptive"]
+    },
+    {
+      "id": "C098",
+      "name": "Autonomous Vehicle Engineer",
+      "category": "Emerging",
+      "description": "Develops perception, planning, and control systems for self-driving vehicles and robotic mobility platforms.",
+      "riasec": ["R", "I"],
+      "personality_traits": ["C", "O"],
+      "preferred_skills": ["engineering", "programming", "machine_learning", "problem_solving"],
+      "work_style": ["structured", "collaborative"]
+    },
+
+    {
+      "id": "C099",
+      "name": "Author / Novelist",
+      "category": "Creative",
+      "description": "Writes fiction or non-fiction books, crafting narratives, characters, and worlds that engage and move readers.",
+      "riasec": ["A"],
+      "personality_traits": ["O"],
+      "preferred_skills": ["writing", "creativity", "storytelling", "research"],
+      "work_style": ["independent", "structured"]
+    },
+    {
+      "id": "C100",
+      "name": "Musician / Composer",
+      "category": "Creative",
+      "description": "Creates and performs original music across genres for recordings, live performances, and multimedia productions.",
+      "riasec": ["A"],
+      "personality_traits": ["O", "E"],
+      "preferred_skills": ["musical_talent", "creativity", "discipline", "collaboration"],
+      "work_style": ["independent", "adaptive"]
+    },
+    {
+      "id": "C101",
+      "name": "Fine Artist / Painter",
+      "category": "Creative",
+      "description": "Produces original visual artworks in painting, sculpture, or mixed media for galleries, commissions, and personal expression.",
+      "riasec": ["A"],
+      "personality_traits": ["O"],
+      "preferred_skills": ["creativity", "manual_dexterity", "visual_communication", "patience"],
+      "work_style": ["independent"]
+    },
+    {
+      "id": "C102",
+      "name": "Game Designer",
+      "category": "Creative",
+      "description": "Conceptualises and designs the mechanics, narrative, levels, and player experience of video or tabletop games.",
+      "riasec": ["A", "I", "E"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["creativity", "systems_thinking", "storytelling", "prototyping"],
+      "work_style": ["collaborative", "adaptive"]
+    },
+    {
+      "id": "C103",
+      "name": "Copywriter",
+      "category": "Creative",
+      "description": "Writes persuasive and engaging text for advertising, marketing campaigns, and digital content.",
+      "riasec": ["A", "E"],
+      "personality_traits": ["O"],
+      "preferred_skills": ["writing", "creativity", "communication", "strategic_thinking"],
+      "work_style": ["independent", "adaptive"]
+    },
+    {
+      "id": "C104",
+      "name": "Animator",
+      "category": "Creative",
+      "description": "Brings characters and stories to life through 2D or 3D animation for film, television, games, and advertising.",
+      "riasec": ["A", "R"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["animation", "creativity", "software_proficiency", "attention_to_detail"],
+      "work_style": ["independent", "collaborative"]
+    },
+    {
+      "id": "C105",
+      "name": "Choreographer",
+      "category": "Creative",
+      "description": "Creates and directs dance performances for stage, film, and live events, combining artistic vision with physical expression.",
+      "riasec": ["A", "S"],
+      "personality_traits": ["O", "E"],
+      "preferred_skills": ["creativity", "physical_coordination", "leadership", "communication"],
+      "work_style": ["collaborative", "adaptive"]
+    },
+
+    {
+      "id": "C106",
+      "name": "Epidemiologist",
+      "category": "Research",
+      "description": "Studies the distribution and determinants of disease in populations to guide public health interventions.",
+      "riasec": ["I", "S"],
+      "personality_traits": ["C", "O"],
+      "preferred_skills": ["statistics", "research", "analytical_thinking", "scientific_writing"],
+      "work_style": ["structured", "independent"]
+    },
+    {
+      "id": "C107",
+      "name": "Archaeologist",
+      "category": "Research",
+      "description": "Excavates and studies material remains of past human cultures to reconstruct historical and prehistoric societies.",
+      "riasec": ["I", "R"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["fieldwork", "research", "analytical_thinking", "documentation"],
+      "work_style": ["independent", "adaptive"]
+    },
+    {
+      "id": "C108",
+      "name": "Econometrician",
+      "category": "Research",
+      "description": "Applies statistical methods to economic data to test theories, forecast trends, and evaluate policies.",
+      "riasec": ["I", "C"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["statistics", "mathematics", "analytical_thinking", "research"],
+      "work_style": ["structured", "independent"]
+    },
+    {
+      "id": "C109",
+      "name": "Clinical Researcher",
+      "category": "Research",
+      "description": "Designs and conducts clinical trials to evaluate the safety and efficacy of new treatments and medical interventions.",
+      "riasec": ["I", "S"],
+      "personality_traits": ["C", "A"],
+      "preferred_skills": ["research", "attention_to_detail", "analytical_thinking", "ethics"],
+      "work_style": ["structured", "collaborative"]
+    },
+    {
+      "id": "C110",
+      "name": "Linguist",
+      "category": "Research",
+      "description": "Studies the structure, history, and social functions of language, with applications in NLP, education, and policy.",
+      "riasec": ["I", "A"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["analytical_thinking", "research", "writing", "pattern_recognition"],
+      "work_style": ["independent", "structured"]
+    },
+
+    {
+      "id": "C111",
+      "name": "Dentist",
+      "category": "Healthcare",
+      "description": "Diagnoses and treats oral health conditions, performing procedures to maintain and restore dental health.",
+      "riasec": ["I", "R", "S"],
+      "personality_traits": ["C", "A"],
+      "preferred_skills": ["manual_dexterity", "attention_to_detail", "clinical_skills", "communication"],
+      "work_style": ["structured", "independent"]
+    },
+    {
+      "id": "C112",
+      "name": "Occupational Therapist",
+      "category": "Healthcare",
+      "description": "Helps people with physical or mental health challenges regain independence in daily activities and work.",
+      "riasec": ["S", "I"],
+      "personality_traits": ["A", "C"],
+      "preferred_skills": ["empathy", "clinical_skills", "creativity", "communication"],
+      "work_style": ["collaborative", "structured"]
+    },
+    {
+      "id": "C113",
+      "name": "Nutritionist / Dietitian",
+      "category": "Healthcare",
+      "description": "Provides evidence-based dietary guidance to individuals and communities to prevent and manage health conditions.",
+      "riasec": ["S", "I"],
+      "personality_traits": ["A", "C"],
+      "preferred_skills": ["communication", "analytical_thinking", "biology_knowledge", "empathy"],
+      "work_style": ["collaborative", "structured"]
+    },
+    {
+      "id": "C114",
+      "name": "Radiologist",
+      "category": "Healthcare",
+      "description": "Interprets medical imaging — X-rays, MRIs, CT scans — to diagnose diseases and guide treatment.",
+      "riasec": ["I", "R"],
+      "personality_traits": ["C", "O"],
+      "preferred_skills": ["attention_to_detail", "analytical_thinking", "medical_imaging_knowledge", "clinical_skills"],
+      "work_style": ["structured", "independent"]
+    },
+
+    {
+      "id": "C115",
+      "name": "Sociologist",
+      "category": "Research",
+      "description": "Studies social behaviour, institutions, and structures to understand how societies function and change.",
+      "riasec": ["I", "S"],
+      "personality_traits": ["O", "A"],
+      "preferred_skills": ["research", "critical_thinking", "writing", "analytical_thinking"],
+      "work_style": ["independent", "structured"]
+    },
+    {
+      "id": "C116",
+      "name": "Political Scientist",
+      "category": "Research",
+      "description": "Analyses political systems, governance, public policy, and international relations through empirical and theoretical frameworks.",
+      "riasec": ["I", "E"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["research", "analytical_thinking", "writing", "critical_thinking"],
+      "work_style": ["independent", "structured"]
+    },
+    {
+      "id": "C117",
+      "name": "Historian",
+      "category": "Research",
+      "description": "Researches, documents, and interprets past events using primary and secondary sources to understand human history.",
+      "riasec": ["I", "A"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["research", "writing", "critical_thinking", "analytical_thinking"],
+      "work_style": ["independent", "structured"]
+    },
+    {
+      "id": "C118",
+      "name": "Philosopher / Ethicist",
+      "category": "Research",
+      "description": "Examines fundamental questions about knowledge, reality, morality, and logic, contributing to academic and applied ethics.",
+      "riasec": ["I", "A"],
+      "personality_traits": ["O"],
+      "preferred_skills": ["critical_thinking", "writing", "argumentation", "research"],
+      "work_style": ["independent", "structured"]
+    },
+
+    {
+      "id": "C119",
+      "name": "Brand Strategist",
+      "category": "Business",
+      "description": "Develops brand identity and positioning strategies that differentiate companies in competitive markets.",
+      "riasec": ["E", "A", "I"],
+      "personality_traits": ["O", "E"],
+      "preferred_skills": ["strategic_thinking", "creativity", "communication", "market_research"],
+      "work_style": ["collaborative", "adaptive"]
+    },
+    {
+      "id": "C120",
+      "name": "Risk Manager",
+      "category": "Finance",
+      "description": "Identifies, assesses, and mitigates financial, operational, and strategic risks across an organisation.",
+      "riasec": ["C", "I", "E"],
+      "personality_traits": ["C", "N_low"],
+      "preferred_skills": ["analytical_thinking", "decision_making", "attention_to_detail", "strategic_thinking"],
+      "work_style": ["structured", "collaborative"]
+    },
+    {
+      "id": "C121",
+      "name": "Tax Consultant",
+      "category": "Finance",
+      "description": "Advises individuals and organisations on tax planning, compliance, and filing to optimise tax obligations legally.",
+      "riasec": ["C", "E", "I"],
+      "personality_traits": ["C"],
+      "preferred_skills": ["financial_knowledge", "attention_to_detail", "communication", "analytical_thinking"],
+      "work_style": ["structured", "independent"]
+    },
+    {
+      "id": "C122",
+      "name": "Venture Capitalist",
+      "category": "Finance",
+      "description": "Invests in early-stage startups with high growth potential, providing capital and strategic mentorship.",
+      "riasec": ["E", "I"],
+      "personality_traits": ["O", "E"],
+      "preferred_skills": ["financial_modelling", "strategic_thinking", "networking", "decision_making"],
+      "work_style": ["adaptive", "collaborative"]
+    },
+
+    {
+      "id": "C123",
+      "name": "Digital Marketing Specialist",
+      "category": "Media",
+      "description": "Plans and executes online marketing campaigns across SEO, social media, email, and paid channels.",
+      "riasec": ["E", "A", "C"],
+      "personality_traits": ["O", "E"],
+      "preferred_skills": ["analytics", "creativity", "communication", "digital_marketing"],
+      "work_style": ["adaptive", "collaborative"]
+    },
+    {
+      "id": "C124",
+      "name": "Social Media Manager",
+      "category": "Media",
+      "description": "Manages brand presence across social platforms, creating content strategies to grow engagement and followers.",
+      "riasec": ["E", "A"],
+      "personality_traits": ["E", "O"],
+      "preferred_skills": ["creativity", "communication", "analytics", "trend_awareness"],
+      "work_style": ["adaptive", "independent"]
+    },
+    {
+      "id": "C125",
+      "name": "Video Game Streamer / Esports Professional",
+      "category": "Media",
+      "description": "Competes professionally in video game tournaments or builds a live streaming audience, combining entertainment with skill.",
+      "riasec": ["A", "E", "R"],
+      "personality_traits": ["E", "O"],
+      "preferred_skills": ["gaming_skill", "communication", "audience_building", "discipline"],
+      "work_style": ["independent", "adaptive"]
+    },
+
+    {
+      "id": "C126",
+      "name": "Structural Engineer",
+      "category": "Engineering",
+      "description": "Analyses and designs load-bearing elements of buildings and infrastructure to ensure safety and stability.",
+      "riasec": ["R", "I", "C"],
+      "personality_traits": ["C"],
+      "preferred_skills": ["engineering", "analytical_thinking", "attention_to_detail", "problem_solving"],
+      "work_style": ["structured", "collaborative"]
+    },
+    {
+      "id": "C127",
+      "name": "Chemical Engineer",
+      "category": "Engineering",
+      "description": "Designs processes to convert raw materials into useful products, working across industries like pharmaceuticals and energy.",
+      "riasec": ["R", "I"],
+      "personality_traits": ["C", "O"],
+      "preferred_skills": ["chemistry_knowledge", "engineering", "analytical_thinking", "problem_solving"],
+      "work_style": ["structured", "collaborative"]
+    },
+    {
+      "id": "C128",
+      "name": "Nuclear Engineer",
+      "category": "Engineering",
+      "description": "Designs and operates nuclear reactors and radiation systems for energy production, medical imaging, and defence.",
+      "riasec": ["I", "R"],
+      "personality_traits": ["C", "N_low"],
+      "preferred_skills": ["physics_knowledge", "engineering", "analytical_thinking", "safety_protocols"],
+      "work_style": ["structured", "independent"]
+    },
+
+    {
+      "id": "C129",
+      "name": "Forensic Scientist",
+      "category": "Law",
+      "description": "Applies scientific methods to analyse physical evidence from crime scenes, providing testimony in legal proceedings.",
+      "riasec": ["I", "R", "C"],
+      "personality_traits": ["C", "O"],
+      "preferred_skills": ["analytical_thinking", "laboratory_skills", "attention_to_detail", "scientific_writing"],
+      "work_style": ["structured", "independent"]
+    },
+    {
+      "id": "C130",
+      "name": "Patent Attorney",
+      "category": "Law",
+      "description": "Protects inventors' intellectual property by filing, prosecuting, and defending patent applications.",
+      "riasec": ["I", "E", "C"],
+      "personality_traits": ["C", "O"],
+      "preferred_skills": ["analytical_thinking", "writing", "technical_knowledge", "research"],
+      "work_style": ["structured", "independent"]
+    },
+    {
+      "id": "C131",
+      "name": "Human Rights Lawyer",
+      "category": "Law",
+      "description": "Advocates for individuals and groups whose fundamental rights have been violated, working with NGOs and courts.",
+      "riasec": ["S", "E", "I"],
+      "personality_traits": ["A", "O", "E"],
+      "preferred_skills": ["argumentation", "empathy", "research", "communication"],
+      "work_style": ["collaborative", "adaptive"]
+    },
+
+    {
+      "id": "C132",
+      "name": "Curriculum Designer",
+      "category": "Education",
+      "description": "Develops structured learning programmes and instructional materials aligned with educational goals and standards.",
+      "riasec": ["A", "S", "C"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["curriculum_design", "communication", "creativity", "analytical_thinking"],
+      "work_style": ["structured", "independent"]
+    },
+    {
+      "id": "C133",
+      "name": "Language Teacher",
+      "category": "Education",
+      "description": "Teaches foreign or classical languages, fostering linguistic proficiency and cross-cultural communication skills.",
+      "riasec": ["S", "A"],
+      "personality_traits": ["A", "E"],
+      "preferred_skills": ["communication", "patience", "empathy", "cultural_awareness"],
+      "work_style": ["collaborative", "structured"]
+    },
+
+    {
+      "id": "C134",
+      "name": "Sports Nutritionist",
+      "category": "Sports",
+      "description": "Designs nutrition and supplementation programmes for athletes to optimise performance, recovery, and health.",
+      "riasec": ["S", "I"],
+      "personality_traits": ["A", "C"],
+      "preferred_skills": ["nutrition_knowledge", "communication", "analytical_thinking", "empathy"],
+      "work_style": ["collaborative", "structured"]
+    },
+    {
+      "id": "C135",
+      "name": "Sports Psychologist",
+      "category": "Sports",
+      "description": "Applies psychological principles to help athletes develop mental toughness, focus, and peak performance mindsets.",
+      "riasec": ["S", "I"],
+      "personality_traits": ["A", "O"],
+      "preferred_skills": ["empathy", "active_listening", "research", "communication"],
+      "work_style": ["collaborative", "structured"]
+    },
+
+    {
+      "id": "C136",
+      "name": "Sound Designer",
+      "category": "Creative",
+      "description": "Creates and manipulates audio elements — music, effects, ambience — for film, games, theatre, and interactive media.",
+      "riasec": ["A", "R"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["audio_editing", "creativity", "technical_knowledge", "attention_to_detail"],
+      "work_style": ["independent", "collaborative"]
+    },
+    {
+      "id": "C137",
+      "name": "Tattoo Artist",
+      "category": "Creative",
+      "description": "Creates custom body art by designing and applying permanent tattoos using specialised needles and inks.",
+      "riasec": ["A", "R"],
+      "personality_traits": ["O"],
+      "preferred_skills": ["manual_dexterity", "creativity", "attention_to_detail", "client_management"],
+      "work_style": ["independent", "adaptive"]
+    },
+
+    {
+      "id": "C138",
+      "name": "Disaster Risk Reduction Specialist",
+      "category": "Government",
+      "description": "Develops frameworks and response plans to reduce the impact of natural and human-caused disasters on communities.",
+      "riasec": ["S", "I", "E"],
+      "personality_traits": ["C", "A", "N_low"],
+      "preferred_skills": ["analytical_thinking", "communication", "project_management", "policy_knowledge"],
+      "work_style": ["structured", "adaptive"]
+    },
+    {
+      "id": "C139",
+      "name": "Cultural Heritage Manager",
+      "category": "Government",
+      "description": "Preserves, manages, and promotes historical sites, museums, and intangible cultural heritage for future generations.",
+      "riasec": ["A", "S", "I"],
+      "personality_traits": ["O", "A"],
+      "preferred_skills": ["research", "communication", "project_management", "cultural_awareness"],
+      "work_style": ["collaborative", "structured"]
+    },
+
+    {
+      "id": "C140",
+      "name": "Microbiologist",
+      "category": "Science",
+      "description": "Studies microorganisms — bacteria, viruses, fungi — and their roles in disease, ecology, and biotechnology.",
+      "riasec": ["I", "R"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["laboratory_skills", "analytical_thinking", "research", "attention_to_detail"],
+      "work_style": ["structured", "independent"]
+    },
+    {
+      "id": "C141",
+      "name": "Palaeontologist",
+      "category": "Science",
+      "description": "Examines fossilised remains of ancient life to understand evolutionary history and prehistoric environments.",
+      "riasec": ["I", "R"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["fieldwork", "research", "analytical_thinking", "scientific_writing"],
+      "work_style": ["independent", "adaptive"]
+    },
+    {
+      "id": "C142",
+      "name": "Bioinformatician",
+      "category": "Science",
+      "description": "Develops computational tools to store, analyse, and interpret biological data including genomes and protein structures.",
+      "riasec": ["I", "C"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["programming", "biology_knowledge", "statistics", "analytical_thinking"],
+      "work_style": ["structured", "independent"]
+    },
+
+    {
+      "id": "C143",
+      "name": "Travel Writer",
+      "category": "Creative",
+      "description": "Produces journalistic and literary content about destinations, cultures, and travel experiences for magazines and platforms.",
+      "riasec": ["A", "I"],
+      "personality_traits": ["O", "E"],
+      "preferred_skills": ["writing", "research", "cultural_awareness", "storytelling"],
+      "work_style": ["independent", "adaptive"]
+    },
+    {
+      "id": "C144",
+      "name": "Event Manager",
+      "category": "Business",
+      "description": "Plans, coordinates, and executes events from conferences and product launches to festivals and weddings.",
+      "riasec": ["E", "S", "C"],
+      "personality_traits": ["E", "C", "N_low"],
+      "preferred_skills": ["project_management", "communication", "negotiation", "attention_to_detail"],
+      "work_style": ["collaborative", "high_pressure"]
+    },
+    {
+      "id": "C145",
+      "name": "Mediator / Conflict Resolution Specialist",
+      "category": "Social Service",
+      "description": "Facilitates dialogue between disputing parties to reach mutually acceptable agreements without litigation.",
+      "riasec": ["S", "E"],
+      "personality_traits": ["A", "N_low"],
+      "preferred_skills": ["communication", "empathy", "negotiation", "active_listening"],
+      "work_style": ["collaborative", "adaptive"]
+    },
+    {
+      "id": "C146",
+      "name": "Real Estate Developer",
+      "category": "Business",
+      "description": "Acquires land, finances construction, and markets property projects, transforming spaces into residential or commercial assets.",
+      "riasec": ["E", "C", "R"],
+      "personality_traits": ["E", "C"],
+      "preferred_skills": ["negotiation", "financial_literacy", "strategic_thinking", "project_management"],
+      "work_style": ["adaptive", "high_pressure"]
+    },
+    {
+      "id": "C147",
+      "name": "Agricultural Scientist",
+      "category": "Science",
+      "description": "Researches and develops improved crop varieties, farming techniques, and soil management practices for food security.",
+      "riasec": ["I", "R"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["research", "biology_knowledge", "fieldwork", "analytical_thinking"],
+      "work_style": ["independent", "adaptive"]
+    },
+    {
+      "id": "C148",
+      "name": "Drone Technology Specialist",
+      "category": "Emerging",
+      "description": "Develops, operates, and applies unmanned aerial systems for applications in logistics, surveillance, agriculture, and rescue.",
+      "riasec": ["R", "I"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["technical_knowledge", "programming", "spatial_reasoning", "problem_solving"],
+      "work_style": ["adaptive", "independent"]
+    },
+    {
+      "id": "C149",
+      "name": "Cybersecurity Policy Analyst",
+      "category": "Government",
+      "description": "Shapes national and organisational policy frameworks for digital security, privacy law, and critical infrastructure protection.",
+      "riasec": ["I", "E", "C"],
+      "personality_traits": ["O", "C"],
+      "preferred_skills": ["policy_knowledge", "analytical_thinking", "research", "communication"],
+      "work_style": ["structured", "collaborative"]
+    },
+    {
+      "id": "C150",
+      "name": "Bioethicist",
+      "category": "Research",
+      "description": "Examines ethical issues arising from advances in biology and medicine, advising hospitals, governments, and research institutions.",
+      "riasec": ["I", "S", "A"],
+      "personality_traits": ["O", "A"],
+      "preferred_skills": ["critical_thinking", "research", "writing", "ethics"],
+      "work_style": ["independent", "collaborative"]
+    }
+
+  ]
+}
