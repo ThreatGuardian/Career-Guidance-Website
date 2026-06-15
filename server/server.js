@@ -3,11 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
-import connectDB from './config/database.js';
 import reportRoutes from './routes/reportRoutes.js';
-import assessmentRoutes from './routes/assessmentRoutes.js';
-import analyticsRoutes from './routes/analyticsRoutes.js';
-import adminRoutes from './routes/adminRoutes.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
@@ -19,9 +15,6 @@ dotenv.config({ path: join(__dirname, '../.env.local') });
 
 const app = express();
 const PORT = process.env.PORT || 3001;
-
-// Connect to MongoDB
-connectDB();
 
 // Security Middleware
 app.use(helmet());
@@ -47,9 +40,6 @@ app.use('/api/', apiLimiter);
 // Routes
 app.use('/api/generate-report', generateReportLimiter); // Apply stricter limit
 app.use('/api', reportRoutes); // POST /api/generate-report
-app.use('/api/assessments', assessmentRoutes);
-app.use('/api/analytics', analyticsRoutes);
-app.use('/api/admin', adminRoutes);
 
 // Health check
 app.get('/health', (req, res) => {

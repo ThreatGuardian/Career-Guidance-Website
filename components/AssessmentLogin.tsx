@@ -3,11 +3,10 @@ import { Mail, User, ArrowRight, ArrowLeft, Shield, Calendar, Phone, MapPin, Boo
 
 interface AssessmentLoginProps {
   onLoginSuccess: (userData: any) => void;
-  onDashboardRedirect: (email: string) => void;
   onBack: () => void;
 }
 
-const AssessmentLogin: React.FC<AssessmentLoginProps> = ({ onLoginSuccess, onDashboardRedirect, onBack }) => {
+const AssessmentLogin: React.FC<AssessmentLoginProps> = ({ onLoginSuccess, onBack }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -55,31 +54,13 @@ const AssessmentLogin: React.FC<AssessmentLoginProps> = ({ onLoginSuccess, onDas
     setLoading(true);
     const cleanedEmail = formData.email.trim().toLowerCase();
 
-    try {
-      // Check 30-day retake policy
-      const res = await fetch(`/api/assessments/check-eligibility/${cleanedEmail}`);
-      if (!res.ok) throw new Error('Failed to check eligibility');
-      
-      const data = await res.json();
-      
-      if (!data.eligible) {
-        alert(data.message || 'You have already taken an assessment recently.');
-        onDashboardRedirect(cleanedEmail);
-        return;
-      }
-
-      // If eligible, proceed to assessment
-      onLoginSuccess({
-        ...formData,
-        email: cleanedEmail,
-        name: formData.name.trim()
-      });
-    } catch (err: any) {
-      console.error(err);
-      setError('Failed to connect to the server. Please try again.');
-    } finally {
-      setLoading(false);
-    }
+    // Directly proceed to assessment (no eligibility check needed)
+    onLoginSuccess({
+      ...formData,
+      email: cleanedEmail,
+      name: formData.name.trim()
+    });
+    setLoading(false);
   };
 
   return (

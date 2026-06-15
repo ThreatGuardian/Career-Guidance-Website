@@ -3,7 +3,7 @@ import { UserProfile } from '../services/scoringEngine';
 import { TopCareer } from '../services/careerMatching';
 import { generateCareerReport, AIReport } from '../lib/aiReport';
 import { trackAnalyticsEvent } from '../lib/analytics';
-import emailjs from '@emailjs/browser';
+import { EmailService } from '../services/email';
 import { Briefcase, Brain, Activity, ArrowLeft, Sparkles, ChevronRight, Target, Flame, Loader2, AlertCircle, BookOpen, GraduationCap, TrendingUp, Lightbulb, Send, CheckCircle2, FileText } from 'lucide-react';
 
 interface ResultsScreenProps {
@@ -19,7 +19,6 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({ userProfile, topCareers, 
   const userId = userData.email;
   const userName = userData.name;
   const [report, setReport] = useState<AIReport | null>(null);
-  const [assessmentId, setAssessmentId] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState('');
   
@@ -48,46 +47,8 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({ userProfile, topCareers, 
       setReport(result);
       
       trackAnalyticsEvent('REPORT_GENERATED', userId);
-      
-      // 2. Persist to MongoDB permanently
-      if (userName && answers) {
-        try {
-          const res = await fetch('/api/assessments', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              userEmail: userId,
-              userName,
-              dob: userData.dob,
-              gender: userData.gender,
-              mobile: userData.mobile,
-              school: userData.school,
-              classYear: userData.classYear,
-              stream: userData.stream,
-              city: userData.city,
-              parentName: userData.parentName,
-              parentMobile: userData.parentMobile,
-              answers,
-              riasec: userProfile.riasec,
-              personality: userProfile.personality,
-              skills: userProfile.skills,
-              reliability: userProfile.reliability,
-              hollandCode: userProfile.hollandCode,
-              stanineScore: userProfile.stanineScore,
-              topCareers,
-              aiReport: result
-            })
-          });
-          const data = await res.json();
-          if (res.ok && data.assessmentId) {
-            setAssessmentId(data.assessmentId);
-          }
-        } catch (dbErr) {
-          console.error("Failed to save to MongoDB, but report generated successfully.", dbErr);
-        }
-      }
 
-      // 3. scroll to report section
+      // 2. scroll to report section
       setTimeout(() => {
         document.getElementById('ai-report-section')?.scrollIntoView({ behavior: 'smooth' });
       }, 500);
@@ -106,28 +67,19 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({ userProfile, topCareers, 
     setEmailSuccess(false);
     
     try {
-      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-      
-      if (!serviceId || !templateId || !publicKey) {
-        throw new Error('EmailJS is not configured. Please add VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, and VITE_EMAILJS_PUBLIC_KEY to your .env.local file.');
-      }
-      
-      const templateParams = {
-        to_email: userId, // Assessment login saves email as userId
+      await EmailService.sendAssessmentReport({
+        to_name: userName || 'Student',
+        to_email: userId,
         profile_summary: report.conclusion,
         strengths: report.strengths.join(', '),
         growth_areas: report.developmentAreas.join(', '),
         learning_style: report.learningStyle,
         work_style: report.academicRecommendations.join(', '),
         career_recommendations: report.careerFitNarrative,
-        why_these_fit: report.careerFitNarrative,
-      };
-      
-      await emailjs.send(serviceId, templateId, templateParams, { publicKey });
+        top_careers: topCareers.slice(0, 5).map((c, i) => `${i + 1}. ${c.career} (${c.match}% match)`).join('\n'),
+      });
+
       setEmailSuccess(true);
-      
       trackAnalyticsEvent('EMAIL_SENT', userId);
       
       // Hide success message after 5 seconds
@@ -399,16 +351,6 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({ userProfile, topCareers, 
                     <div className="text-red-300 text-sm bg-red-900/40 px-3 py-2 rounded-lg border border-red-500/30">
                       {emailError}
                     </div>
-                  )}
-
-                  {assessmentId && (
-                    <button
-                      onClick={() => window.open(`/api/report/pdf/${assessmentId}`, '_blank')}
-                      className="flex items-center gap-2 bg-white hover:bg-gray-50 text-brand-navy border border-transparent px-5 py-2.5 rounded-xl font-semibold transition-all shadow-md"
-                    >
-                      <FileText size={18} />
-                      Download PDF
-                    </button>
                   )}
                 </div>
               </div>
